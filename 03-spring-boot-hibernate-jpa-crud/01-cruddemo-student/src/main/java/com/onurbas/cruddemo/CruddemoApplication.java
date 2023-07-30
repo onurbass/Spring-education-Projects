@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 
 @SpringBootApplication
 public class CruddemoApplication {
@@ -22,11 +24,61 @@ public class CruddemoApplication {
 		return runner -> {
 			//createStudent(studentDAO);
 			createMultipleStudents(studentDAO);
+			//readStudent(studentDAO);
+			//queryForStudents(studentDAO).forEach(System.out::println);
+			//findByFirstName(studentDAO).forEach(System.out::println);
+			//updateStudent(studentDAO);
+			//deleteStudent(studentDAO);
+			//deleteAllStudent(studentDAO);
 		};
 	}
-public void createMultipleStudents(StudentDAO studentDao){
+
+	public int deleteAllStudent(StudentDAO studentDAO) {
+
+		return studentDAO.deleteAll();
+
+	}
+
+	public void deleteStudent(StudentDAO studentDAO) {
+		int id =2;
+
+		studentDAO.delete(id);
+	}
+
+	public void updateStudent(StudentDAO studentDAO) {
+		int studentId=1;
+		Student student=studentDAO.findById(studentId);
+		student.setFirstName("Duffy");
+		studentDAO.update(student);
+
+		System.out.println(student);
+	}
+
+
+	public List<Student> findByFirstName(StudentDAO studentDAO) {
+		return studentDAO.findByFirstName("zaa");
+	}
+
+	public List<Student> queryForStudents(StudentDAO studentDAO) {
+		return studentDAO.findAll();
+	}
+
+	public void readStudent(StudentDAO studentDAO) {
+		//create a student object
+		Student student = Student.builder().firstName("onur").lastName("bas").email("onurbass").build();
+		//save the student
+		studentDAO.save(student);
+		//display id of the save student
+		System.out.println("Student id : "+student.getId());
+		//retrieve student based on the id
+		Student student1=studentDAO.findById(student.getId());
+		//display student
+		System.out.println(student1);
+	}
+
+	public void createMultipleStudents(StudentDAO studentDao){
 	Student student1 = Student.builder()
-			.firstName("zaa")
+			.firstName("Onur")
 			.lastName("Bas")
 			.email("zaa@gmail.com")
 			.build();
