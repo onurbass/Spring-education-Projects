@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.mimaraaslan</groupId>
-    <artifactId>_079_SpringBoot_Annotation_Config</artifactId>
+    <artifactId>_04_SpringBoot_Annotation_Config</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>_079_SpringBoot_Annotation_Config</name>
     <description>_079_SpringBoot_Annotation_Config</description>

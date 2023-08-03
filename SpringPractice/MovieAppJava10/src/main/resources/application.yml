@@ -1,0 +1,11 @@
+server:
+  port: 8090
+spring:
+  datasource:
+    username: postgres
+    password: 123456789
+    url: jdbc:postgresql://localhost:5432/MovieDb
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update

@@ -26,6 +26,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.14'
+    implementation 'org.postgresql:postgresql:42.6.0'
+
 }
 
 tasks.named('test') {
