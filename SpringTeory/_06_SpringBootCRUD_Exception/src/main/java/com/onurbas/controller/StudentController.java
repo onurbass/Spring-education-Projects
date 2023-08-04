@@ -15,8 +15,12 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class StudentController {
 
+
+    private final StudentService studentService;
     @Autowired
-    StudentService studentService;
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     //    http://localhost:8080/api/v1
     @GetMapping
@@ -41,7 +45,7 @@ public class StudentController {
 
 
     //   GET  http://localhost:8080/api/v1/students/1
-    @GetMapping("/students/{id}")
+    @GetMapping("/students/{id}")//path variable valuesu verilmese def olarak idle eşleştirirdi.matchup olmalı
     public ResponseEntity<Student> getOneStudent(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
 
         return studentService.getOneStudent(id);

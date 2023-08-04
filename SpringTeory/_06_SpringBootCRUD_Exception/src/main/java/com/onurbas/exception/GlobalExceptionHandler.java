@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import java.rmi.StubNotFoundException;
 import java.util.Date;
 
 @ControllerAdvice
@@ -22,6 +23,16 @@ public class GlobalExceptionHandler {
 */
 
     @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> resourceNotFoundException (ResourceNotFoundException exception,WebRequest request){
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                new Date(),
+                exception.getMessage(),request.getDescription(false));
+
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> resourceNotFoundException (Exception exception, WebRequest request){
 
         ErrorDetails errorDetails = new ErrorDetails(
@@ -29,8 +40,8 @@ public class GlobalExceptionHandler {
                 exception.getMessage(),
                 request.getDescription(false));
 
-        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
-    }
 
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 
 }
