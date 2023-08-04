@@ -3,7 +3,7 @@ package com.onurbas.controller;
 import com.onurbas.dto.request.LoginRequestDto;
 import com.onurbas.dto.request.RegisterRequestDto;
 import com.onurbas.repository.entity.User;
-import com.onurbas.response.UserResponseDto;
+import com.onurbas.dto.response.UserResponseDto;
 import com.onurbas.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

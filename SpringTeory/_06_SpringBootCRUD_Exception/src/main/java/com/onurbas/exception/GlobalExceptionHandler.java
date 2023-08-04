@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
-    @ExceptionHandler(ResourceNotFoundException.class)
+   /* @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> resourceNotFoundException (Exception exception, WebRequest request){
 
         ErrorDetails errorDetails = new ErrorDetails(
@@ -42,6 +42,6 @@ public class GlobalExceptionHandler {
 
 
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
-    }
+    }*/
 
 }

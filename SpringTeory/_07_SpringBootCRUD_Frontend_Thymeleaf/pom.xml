@@ -9,18 +9,14 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.onurbas</groupId>
-    <artifactId>_06_SpringBootCRUD_Exception</artifactId>
+    <artifactId>_07_SpringBootCRUD_Frontend_Thymeleaf</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>_06_SpringBootCRUD_Exception</name>
-    <description>_06_SpringBootCRUD_Exception</description>
+    <name>_06_SpringBootCRUD_Frontend_Thymeleaf</name>
+    <description>_06_SpringBootCRUD_Frontend_Thymeleaf</description>
     <properties>
         <java.version>20</java.version>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -29,12 +25,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
 
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -46,12 +51,6 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.1.0</version>
-        </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

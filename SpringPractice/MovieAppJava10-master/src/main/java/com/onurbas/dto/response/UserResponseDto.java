@@ -1,4 +1,4 @@
-package com.onurbas.response;
+package com.onurbas.dto.response;
 
 import com.onurbas.repository.enums.EUserType;
 import lombok.AllArgsConstructor;

@@ -2,7 +2,7 @@ package com.onurbas.mapper;
 
 import com.onurbas.dto.request.RegisterRequestDto;
 import com.onurbas.repository.entity.User;
-import com.onurbas.response.UserResponseDto;
+import com.onurbas.dto.response.UserResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;

@@ -5,7 +5,7 @@ import com.onurbas.dto.request.RegisterRequestDto;
 import com.onurbas.mapper.IUserMapper;
 import com.onurbas.repository.IUserRepository;
 import com.onurbas.repository.entity.User;
-import com.onurbas.response.UserResponseDto;
+import com.onurbas.dto.response.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
