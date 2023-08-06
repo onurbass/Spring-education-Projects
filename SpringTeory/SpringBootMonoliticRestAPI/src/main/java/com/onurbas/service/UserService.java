@@ -17,8 +17,12 @@ public class UserService {
   public List<User> findAll(){
 	return userRepository.findAll();
   }
-  public Optional<User> findById(Long id){
-	return userRepository.findById(id);
+  public User findById(Long id){
+	Optional<User> user=userRepository.findById(id);
+	if (user.isEmpty()){
+	  throw new RuntimeException("Kullanıcı bulunamadı");
+	}
+	return user.get();
   }
   public User save(User user){
 	return userRepository.save(user);

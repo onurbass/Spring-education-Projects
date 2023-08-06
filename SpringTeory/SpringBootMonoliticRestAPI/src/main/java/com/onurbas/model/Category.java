@@ -19,7 +19,7 @@ public class Category {
   private String description;
 
   @ToString.Exclude
-  @ManyToMany(cascade = CascadeType.ALL,mappedBy = "postCategories",fetch = FetchType.LAZY)
+  @OneToMany(cascade = CascadeType.ALL,mappedBy = "category",fetch = FetchType.LAZY)
   private List<Post> posts;
 
 }

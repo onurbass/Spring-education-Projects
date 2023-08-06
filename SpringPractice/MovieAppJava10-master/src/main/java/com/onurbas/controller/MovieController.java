@@ -1,6 +1,7 @@
 package com.onurbas.controller;
 
 import static com.onurbas.constant.RestApiUrl.*;
+
 import com.onurbas.repository.entity.Movie;
 import com.onurbas.service.MovieService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -17,11 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MovieController {
 
-  private final MovieService movieService;
+    private final MovieService movieService;
 
-  @GetMapping("/before_premired")
-  public ResponseEntity <List<Movie>> findAllByPremiredBefore(String date){
+    @GetMapping("/before_premired")
+    public ResponseEntity <List<Movie>> findAllByPremiredBefore(String date){
 
-	return ResponseEntity.ok(movieService.findAllByPremiredBefore(date));
-  }
+        return ResponseEntity.ok(movieService.findAllByPremiredBefore(date));
+    }
 }

@@ -4,6 +4,7 @@ import com.onurbas.repository.IMovieRepository;
 import com.onurbas.repository.entity.Movie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,17 +12,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MovieService {
 
-  private final IMovieRepository movieRepository;
+    private final IMovieRepository movieRepository;
 
-  public List<Movie> findAllByPremiredBefore(String date) {
+   public   List<Movie> findAllByPremiredBefore(String date){
 
-	LocalDate myDate = null;
-	try {
-	  myDate = LocalDate.parse(date);
-	} catch (Exception e) {
-	  throw new RuntimeException(e.toString());
-	}
+       LocalDate myDate=null;
+       try {
+           myDate=LocalDate.parse(date);
+       }catch (Exception e){
+            throw new RuntimeException(e.toString());
+       }
 
-	return movieRepository.findAllByPremiredBefore(myDate);
-  }
+     return movieRepository.findAllByPremiredBefore(myDate);
+ }
 }

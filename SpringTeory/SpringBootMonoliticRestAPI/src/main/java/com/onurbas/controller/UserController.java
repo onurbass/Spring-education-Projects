@@ -3,11 +3,11 @@ package com.onurbas.controller;
 import com.onurbas.model.User;
 import com.onurbas.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
+import static com.onurbas.constant.RestApiUrl.*;
 
 @RestController
 @RequestMapping
@@ -16,22 +16,24 @@ public class UserController {
 
   private final UserService userService;
 
-  @GetMapping("/hello")
-  public String sayHello() {
-	return "Hello";
-  }
-  @GetMapping("/users")
-  public List<User> findAll(){
+  @GetMapping(USER)
+  public List<User> findAll() {
 	return userService.findAll();
   }
-  @GetMapping("/users/{id}")
-  public Optional<User> findById(@PathVariable(name = "id") Long id){
+
+  @GetMapping(USER + "/{userId}")
+  public User findById(@PathVariable(name = "userId") Long id) {
 	return userService.findById(id);
   }
 
-  @PostMapping("/users")
-  public User save(User user){
+  @PostMapping(USER)
+  public User save(@RequestBody User user) {
 	return userService.save(user);
+  }
+
+  @DeleteMapping(USER + "/{userId}")
+  public void deleteById(@PathVariable(name = "userId") Long id) {
+	userService.deleteById(id);
   }
 
 }

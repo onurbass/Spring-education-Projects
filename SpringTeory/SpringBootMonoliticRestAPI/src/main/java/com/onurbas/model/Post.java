@@ -28,7 +28,7 @@ public class Post {
   private User author;
 
   @ToString.Exclude
-  @ManyToMany(cascade = CascadeType.ALL)
-  private List<Category> postCategories;
+  @ManyToOne(cascade = CascadeType.ALL)
+  private Category category;
 
 }
