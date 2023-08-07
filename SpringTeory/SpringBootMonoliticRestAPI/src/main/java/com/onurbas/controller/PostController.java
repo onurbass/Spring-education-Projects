@@ -1,9 +1,7 @@
 package com.onurbas.controller;
 
+import com.onurbas.dto.response.PostDTO;
 import com.onurbas.model.Post;
-import com.onurbas.model.Post;
-import com.onurbas.model.User;
-import com.onurbas.service.PostService;
 import com.onurbas.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.onurbas.constant.RestApiUrl.*;
 
@@ -22,19 +19,25 @@ public class PostController {
 
   private final PostService postService;
 
+  @PostMapping(POST)
+  public ResponseEntity<PostDTO> save(@RequestBody Post post) {
+	return ResponseEntity.status(HttpStatus.CREATED).body(postService.save(post));
+  }
+
   @GetMapping(POST)
-  public ResponseEntity<List<Post>> findAll() {
+  public ResponseEntity<List<PostDTO>> findAll() {
 	return ResponseEntity.ok(postService.findAll());
   }
 
   @GetMapping(POST + "/{postId}")
-  public ResponseEntity<Post> findById(@PathVariable(name = "postId") Long id) {
+  public ResponseEntity<PostDTO> findById(@PathVariable(name = "postId") Long id) {
 	return ResponseEntity.ok(postService.findById(id));
   }
 
-  @PostMapping(POST)
-  public ResponseEntity<Post> save(@RequestBody Post post) {
-	return ResponseEntity.status(HttpStatus.CREATED).body(postService.save(post));
+  @PutMapping(POST + "/{postId}")
+  public ResponseEntity<PostDTO> update(@RequestBody Post post,@PathVariable(name = "postId") Long id) {
+	post.setId(id);
+	return ResponseEntity.ok(postService.save(post));
   }
 
   @DeleteMapping(POST + "/{postId}")
@@ -43,21 +46,15 @@ public class PostController {
 	return ResponseEntity.noContent().build();
   }
 
-  @GetMapping(POST + "/user/{userId}")
-  public ResponseEntity<List<Post>> getPostsByUserId(@PathVariable(name = "userId") Long id) {
-
-	return ResponseEntity.ok(postService.getPostsByUserId(id));
-  }
-
-  @PutMapping(POST /*+ "/{postId}"*/)
-  public ResponseEntity<Post> update(@RequestBody Post post) {
-	return ResponseEntity.ok(postService.save(post));
-  }
-
   @GetMapping(POST + "/category/{categoryId}")
-  public ResponseEntity<List<Post>> getPostsByCategoryId(@PathVariable(name = "categoryId") Long id) {
+  public ResponseEntity<List<PostDTO>> findPostsByCategoryId(@PathVariable(name = "categoryId") Long id) {
 
-	return ResponseEntity.ok(postService.getPostsByCategoryId(id));
+	return ResponseEntity.ok(postService.findPostsByCategoryId(id));
   }
 
+  @GetMapping(POST + "/user/{userId}")
+  public ResponseEntity<List<PostDTO>> findPostsByUserId(@PathVariable(name = "userId") Long id) {
+
+	return ResponseEntity.ok(postService.findPostsByUserId(id));
+  }
 }

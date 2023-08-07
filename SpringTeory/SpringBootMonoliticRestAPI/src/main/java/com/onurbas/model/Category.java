@@ -1,5 +1,6 @@
 package com.onurbas.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,8 +19,8 @@ public class Category {
   private String categoryName;
   private String description;
 
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "category", fetch = FetchType.LAZY)
   @ToString.Exclude
-  @OneToMany(cascade = CascadeType.ALL,mappedBy = "category",fetch = FetchType.LAZY)
   private List<Post> posts;
 
 }

@@ -1,5 +1,6 @@
 package com.onurbas.controller;
 
+import com.onurbas.dto.response.UserDTO;
 import com.onurbas.model.User;
 import com.onurbas.model.User;
 import com.onurbas.service.UserService;
@@ -19,22 +20,24 @@ public class UserController {
 
   private final UserService userService;
 
+  @PostMapping(USER)
+  public ResponseEntity<UserDTO> save(@RequestBody User user) {
+	return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
+  }
+
   @GetMapping(USER)
-  public ResponseEntity<List<User>> findAll() {
+  public ResponseEntity<List<UserDTO>> findAll() {
 	return ResponseEntity.ok(userService.findAll());
   }
 
   @GetMapping(USER + "/{userId}")
-  public ResponseEntity<User> findById(@PathVariable(name = "userId") Long id) {
+  public ResponseEntity<UserDTO> findById(@PathVariable(name = "userId") Long id) {
 	return ResponseEntity.ok(userService.findById(id));
   }
 
-  @PostMapping(USER)
-  public ResponseEntity<User> save(@RequestBody User user) {
-	return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
-  }
-  @PutMapping(USER /*+ "/{userId}"*/)
-  public ResponseEntity<User> update(@RequestBody User user) {
+  @PutMapping(USER + "/{userId}")
+  public ResponseEntity<UserDTO> update(@RequestBody User user,@PathVariable(name = "userId") Long id) {
+	user.setId(id);
 	return ResponseEntity.ok(userService.save(user));
   }
 
@@ -43,7 +46,5 @@ public class UserController {
 	userService.deleteById(id);
 	return ResponseEntity.noContent().build();
   }
-
-
 
 }

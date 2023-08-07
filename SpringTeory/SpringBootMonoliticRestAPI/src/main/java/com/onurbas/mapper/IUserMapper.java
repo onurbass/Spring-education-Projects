@@ -1,9 +1,10 @@
 package com.onurbas.mapper;
 
 import com.onurbas.dto.request.RegisterRequestDto;
-import com.onurbas.dto.response.UserResponseDto;
+import com.onurbas.dto.response.UserDTO;
 import com.onurbas.model.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -14,10 +15,12 @@ public interface IUserMapper {
 
   IUserMapper INSTANCE = Mappers.getMapper(IUserMapper.class);
 
-  UserResponseDto toUserResponseDto(User user);
 
-  User toUser(RegisterRequestDto dto);
+  UserDTO userToUserDto(User user);
 
-  List<UserResponseDto> toUserResponseDtos(List<User> userList);
+
+  List<UserDTO> userListToUserDTOList(List<User> userList);
+
+  User registerRequestDTOToUser(RegisterRequestDto dto);
 
 }

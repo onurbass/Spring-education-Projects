@@ -11,8 +11,9 @@ import java.util.List;
 @Transactional
 public interface IPostRepository extends JpaRepository<Post, Long> {
 
-  List<Post> getPostsByUserId(Long id);
+  List<Post> findPostsByUserId(Long id);
 
-  List<Post> getPostsByCategoryId(Long id);
+  List<Post> findPostsByCategoryId(Long id);
+
 
 }

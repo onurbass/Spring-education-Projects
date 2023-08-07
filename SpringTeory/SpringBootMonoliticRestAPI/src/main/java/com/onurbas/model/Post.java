@@ -1,5 +1,6 @@
 package com.onurbas.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,12 +22,12 @@ public class Post {
   @Column(name = "published_at")
   @Builder.Default
   private LocalDateTime date = LocalDateTime.now();
-  /*@Column(name = "user_id")*/
-  @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+
+  @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.LAZY)
   private User user;
 
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @ToString.Exclude
-  @ManyToOne(cascade = CascadeType.ALL)
   private Category category;
 
 }

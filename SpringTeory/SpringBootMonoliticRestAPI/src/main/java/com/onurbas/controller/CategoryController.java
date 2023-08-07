@@ -1,5 +1,6 @@
 package com.onurbas.controller;
 
+import com.onurbas.dto.response.CategoryDTO;
 import com.onurbas.model.Category;
 import com.onurbas.model.Post;
 import com.onurbas.service.CategoryService;
@@ -31,12 +32,13 @@ public class CategoryController {
   }
 
   @PostMapping(CATEGORY)
-  public ResponseEntity<Category> save(@RequestBody Category category) {
+  public ResponseEntity<CategoryDTO> save(@RequestBody Category category) {
 	return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.save(category));
   }
 
-  @PutMapping(CATEGORY /*+ "/{categoryId}"*/)
-  public ResponseEntity<Category> update(@RequestBody Category category) {
+  @PutMapping(CATEGORY + "/{categoryId}")
+  public ResponseEntity<CategoryDTO> update(@RequestBody Category category,@PathVariable(name = "categoryId") Long id) {
+	category.setId(id);
 	return ResponseEntity.ok(categoryService.save(category));
   }
 
@@ -45,6 +47,5 @@ public class CategoryController {
 	categoryService.deleteById(id);
 	return ResponseEntity.noContent().build();
   }
-
 
 }

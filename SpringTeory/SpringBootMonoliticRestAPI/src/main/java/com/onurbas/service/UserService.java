@@ -1,11 +1,19 @@
 package com.onurbas.service;
 
+import com.onurbas.dto.response.UserDTO;
+import com.onurbas.dto.response.UserDTO;
+import com.onurbas.dto.response.UserDTO;
 import com.onurbas.exception.BadRequestException;
 import com.onurbas.exception.InternalServerErrorException;
 import com.onurbas.exception.ResourceNotFoundException;
+import com.onurbas.mapper.IUserMapper;
+import com.onurbas.mapper.IUserMapper;
+import com.onurbas.mapper.IUserMapper;
+import com.onurbas.model.User;
 import com.onurbas.model.User;
 import com.onurbas.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -15,15 +23,15 @@ import java.util.Optional;
 public class UserService {
   private final IUserRepository userRepository;
 
-  public List<User> findAll() {
+  public List<UserDTO> findAll() {
 	try {
-	  return userRepository.findAll();
-	} catch (Exception e) {
+	  return IUserMapper.INSTANCE.userListToUserDTOList(userRepository.findAll());
+	} catch (DataAccessException e) {
 	  throw new InternalServerErrorException("An error occurred while fetching categories");
 	}
   }
 
-  public User findById(Long id) {
+  public UserDTO findById(Long id) {
 	if (id <= 0) {
 	  throw new BadRequestException("Invalid user ID: " + id);
 	}
@@ -32,13 +40,17 @@ public class UserService {
 	if (userOptional.isEmpty()) {
 	  throw new ResourceNotFoundException("User not found with ID: " + id);
 	}
-
-	return userOptional.get();
+	UserDTO userDTO = IUserMapper.INSTANCE.userToUserDto(userRepository.findById(id).get());
+	return userDTO;
   }
 
-  public User save(User user) {
+  public UserDTO save(User user) {
 	try {
-	  return userRepository.save(user);
+	  if (user == null) {
+		throw new BadRequestException("User cannot be null");
+	  }
+	  UserDTO userDto = IUserMapper.INSTANCE.userToUserDto(userRepository.save(user));
+	  return userDto;
 	} catch (Exception e) {
 	  throw new InternalServerErrorException("An error occurred while saving user");
 	}

@@ -1,8 +1,11 @@
 package com.onurbas.service;
 
+import com.onurbas.dto.response.CategoryDTO;
 import com.onurbas.exception.BadRequestException;
 import com.onurbas.exception.InternalServerErrorException;
 import com.onurbas.exception.ResourceNotFoundException;
+import com.onurbas.mapper.ICategoryMapper;
+import com.onurbas.model.Category;
 import com.onurbas.model.Category;
 import com.onurbas.repository.ICategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,9 +40,13 @@ public class CategoryService {
 	return categoryOptional.get();
   }
 
-  public Category save(Category category) {
+  public CategoryDTO save(Category category) {
 	try {
-	  return categoryRepository.save(category);
+	  if (category == null) {
+		throw new BadRequestException("Category cannot be null");
+	  }
+	  CategoryDTO categoryDto = ICategoryMapper.INSTANCE.categoryToCategoryDTO(categoryRepository.save(category));
+	  return categoryDto;
 	} catch (Exception e) {
 	  throw new InternalServerErrorException("An error occurred while saving category");
 	}
