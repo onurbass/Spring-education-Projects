@@ -1,8 +1,11 @@
 package com.onurbas.controller;
 
 import com.onurbas.model.User;
+import com.onurbas.model.User;
 import com.onurbas.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,30 +13,37 @@ import java.util.List;
 import static com.onurbas.constant.RestApiUrl.*;
 
 @RestController
-@RequestMapping
+@RequestMapping("/")
 @RequiredArgsConstructor
 public class UserController {
 
   private final UserService userService;
 
   @GetMapping(USER)
-  public List<User> findAll() {
-	return userService.findAll();
+  public ResponseEntity<List<User>> findAll() {
+	return ResponseEntity.ok(userService.findAll());
   }
 
   @GetMapping(USER + "/{userId}")
-  public User findById(@PathVariable(name = "userId") Long id) {
-	return userService.findById(id);
+  public ResponseEntity<User> findById(@PathVariable(name = "userId") Long id) {
+	return ResponseEntity.ok(userService.findById(id));
   }
 
   @PostMapping(USER)
-  public User save(@RequestBody User user) {
-	return userService.save(user);
+  public ResponseEntity<User> save(@RequestBody User user) {
+	return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
+  }
+  @PutMapping(USER /*+ "/{userId}"*/)
+  public ResponseEntity<User> update(@RequestBody User user) {
+	return ResponseEntity.ok(userService.save(user));
   }
 
   @DeleteMapping(USER + "/{userId}")
-  public void deleteById(@PathVariable(name = "userId") Long id) {
+  public ResponseEntity<Void> deleteById(@PathVariable(name = "userId") Long id) {
 	userService.deleteById(id);
+	return ResponseEntity.noContent().build();
   }
+
+
 
 }

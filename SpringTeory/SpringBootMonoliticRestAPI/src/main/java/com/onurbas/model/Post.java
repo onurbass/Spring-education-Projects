@@ -1,11 +1,9 @@
 package com.onurbas.model;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -22,10 +20,10 @@ public class Post {
   private String content;
   @Column(name = "published_at")
   @Builder.Default
-  private LocalDateTime date=LocalDateTime.now();
+  private LocalDateTime date = LocalDateTime.now();
   /*@Column(name = "user_id")*/
-  @ManyToOne(cascade ={CascadeType.PERSIST,CascadeType.MERGE} )
-  private User author;
+  @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+  private User user;
 
   @ToString.Exclude
   @ManyToOne(cascade = CascadeType.ALL)

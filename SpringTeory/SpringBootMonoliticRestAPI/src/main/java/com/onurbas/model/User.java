@@ -1,10 +1,9 @@
 package com.onurbas.model;
 
+import com.onurbas.model.enums.EUserType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,13 +20,13 @@ public class User {
   private Long id;
   private String firstName;
   private String lastName;
-  @Column(unique = true)//,nullable = false, )
+  @Column(unique = true,nullable = false)
   private String email;
- // @Column(nullable = false)
+  @Column(nullable = false)
   private String password;
-
+  private EUserType userType;
   @ToString.Exclude
-  @OneToMany(mappedBy = "author",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
   List<Post> userPosts;
 
 
