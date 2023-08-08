@@ -1,11 +1,14 @@
 package com.onurbas.service;
 
-import com.onurbas.dto.response.PostDTO;
+import com.onurbas.dto.response.PostResponseDTO;
+import com.onurbas.dto.request.PostRequestDTO;
 import com.onurbas.exception.BadRequestException;
 import com.onurbas.exception.InternalServerErrorException;
 import com.onurbas.exception.ResourceNotFoundException;
 import com.onurbas.mapper.IPostMapper;
+import com.onurbas.model.Category;
 import com.onurbas.model.Post;
+import com.onurbas.model.User;
 import com.onurbas.repository.IPostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
@@ -18,8 +21,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostService {
   private final IPostRepository postRepository;
+  private final CategoryService categoryService;
+  private final UserService userService;
 
-  public List<PostDTO> findAll() {
+  public List<PostResponseDTO> findAll() {
 	try {
 	  return IPostMapper.INSTANCE.postListToPostDTOList(postRepository.findAll());
 	} catch (DataAccessException e) {
@@ -27,7 +32,7 @@ public class PostService {
 	}
   }
 
-  public PostDTO findById(Long id) {
+  public PostResponseDTO findById(Long id) {
 	if (id <= 0) {
 	  throw new BadRequestException("Invalid post ID: " + id);
 	}
@@ -36,19 +41,65 @@ public class PostService {
 	if (postOptional.isEmpty()) {
 	  throw new ResourceNotFoundException("Post not found with ID: " + id);
 	}
-	PostDTO postDTO = IPostMapper.INSTANCE.postToPostDTO(postRepository.findById(id).get());
-	return postDTO;
+	PostResponseDTO postResponseDTO = IPostMapper.INSTANCE.postToPostDTO(postRepository.findById(id).get());
+	return postResponseDTO;
   }
 
-  public PostDTO save(Post post) {
+  public PostResponseDTO save(PostRequestDTO postRequestDTO,Long userId,Long categoryId) {
 	try {
-	  if (post == null) {
+	  if (postRequestDTO == null) {
 		throw new BadRequestException("Post cannot be null");
 	  }
-	  PostDTO postDto = IPostMapper.INSTANCE.postToPostDTO(postRepository.save(post));
-	  return postDto;
-	} catch (Exception e) {
-	  throw new InternalServerErrorException("An error occurred while saving post");
+
+	  User user = userService.getById(userId);
+	  if (user == null) {
+		throw new BadRequestException("User does not exist");
+	  }
+
+	  Category category = categoryService.getById(categoryId);
+	  if (category == null) {
+		throw new BadRequestException("Category does not exist");
+	  }
+		Post post = IPostMapper.INSTANCE.postRequestDTOToPost(postRequestDTO);
+	  post.setUser(user);
+	  post.setCategory(category);
+
+	  Post savedPost = postRepository.save(post);
+
+	  if (savedPost == null) {
+		throw new InternalServerErrorException("An error occurred while saving post");
+	  }
+	  return IPostMapper.INSTANCE.postToPostDTO(savedPost);
+	}  catch (Exception e) {
+	  throw new InternalServerErrorException("An error occurred while saving post: " + e.toString());
+	}
+  }
+
+  public PostResponseDTO update(PostResponseDTO postResponseDTO,Long id,Long userId,Long categoryId) {
+	try {
+
+
+	  User user = userService.getById(userId);
+	  if (user == null) {
+		throw new BadRequestException("User does not exist");
+	  }
+	  Category category = categoryService.getById(categoryId);
+	  if (category == null) {
+		throw new BadRequestException("Category does not exist");
+	  }
+	  postResponseDTO.setId(id);
+	  Post post = IPostMapper.INSTANCE.postDTOToPost(postResponseDTO);
+	  post.setUser(user);
+	  post.setCategory(category);
+
+	  Post savedPost = postRepository.save(post);
+
+	  if (savedPost == null) {
+		throw new InternalServerErrorException("An error occurred while saving post");
+	  }
+	  return IPostMapper.INSTANCE.postToPostDTO(savedPost);
+	}  catch (Exception e) {
+	  throw new InternalServerErrorException("An error occurred while saving post: " + e.toString());
 	}
   }
 
@@ -64,8 +115,8 @@ public class PostService {
 	}
   }
 
-  public List<PostDTO> findPostsByUserId(Long id) {
-	List<PostDTO> posts = IPostMapper.INSTANCE.postListToPostDTOList(postRepository.findPostsByUserId(id));
+  public List<PostResponseDTO> findPostsByUserId(Long id) {
+	List<PostResponseDTO> posts = IPostMapper.INSTANCE.postListToPostDTOList(postRepository.findPostsByUserId(id));
 	if (posts.isEmpty()) {
 	  throw new ResourceNotFoundException("No posts found for user with id: " + id);
 	}
@@ -73,12 +124,21 @@ public class PostService {
 	return posts;
   }
 
-  public List<PostDTO> findPostsByCategoryId(Long id) {
-	List<PostDTO> posts = IPostMapper.INSTANCE.postListToPostDTOList(postRepository.findPostsByCategoryId(id));
+  public List<PostResponseDTO> findPostsByCategoryId(Long id) {
+	List<PostResponseDTO> posts = IPostMapper.INSTANCE.postListToPostDTOList(postRepository.findPostsByCategoryId(id));
 	if (posts.isEmpty()) {
 	  throw new ResourceNotFoundException("No posts found for category with id: " + id);
 	}
 	return posts;
   }
+  public List<PostResponseDTO> getPostsByOrderByDateDesc() {
+	return IPostMapper.INSTANCE.postListToPostDTOList(postRepository.getPostsByOrderByDateDesc()) ;
+  }
 
+  public List<PostResponseDTO> findPostsByCategory(String category){
+	return IPostMapper.INSTANCE.postListToPostDTOList(postRepository.getPostsByCategoryCategoryName(category));
+  }
+  public List<PostResponseDTO> findPostsByContentContains(String search){
+	return IPostMapper.INSTANCE.postListToPostDTOList(postRepository.getPostsByContentContainingIgnoreCase(search));
+  }
 }

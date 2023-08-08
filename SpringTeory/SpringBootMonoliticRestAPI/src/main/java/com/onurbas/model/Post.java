@@ -17,7 +17,7 @@ public class Post {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String title;
-  @Lob
+
   private String content;
   @Column(name = "published_at")
   @Builder.Default
@@ -26,7 +26,7 @@ public class Post {
   @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.LAZY)
   private User user;
 
-  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.LAZY)
   @ToString.Exclude
   private Category category;
 

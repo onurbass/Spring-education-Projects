@@ -1,8 +1,7 @@
 package com.onurbas.controller;
 
-import com.onurbas.dto.response.UserDTO;
-import com.onurbas.model.User;
-import com.onurbas.model.User;
+import com.onurbas.dto.response.UserResponseDTO;
+import com.onurbas.dto.request.UserRequestDTO;
 import com.onurbas.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,24 +20,25 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping(USER)
-  public ResponseEntity<UserDTO> save(@RequestBody User user) {
-	return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
+  public ResponseEntity<UserResponseDTO> save(@RequestBody UserRequestDTO userRequestDTO) {
+	return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userRequestDTO));
   }
 
   @GetMapping(USER)
-  public ResponseEntity<List<UserDTO>> findAll() {
+  public ResponseEntity<List<UserResponseDTO>> findAll() {
 	return ResponseEntity.ok(userService.findAll());
   }
 
   @GetMapping(USER + "/{userId}")
-  public ResponseEntity<UserDTO> findById(@PathVariable(name = "userId") Long id) {
+  public ResponseEntity<UserResponseDTO> findById(@PathVariable(name = "userId") Long id) {
 	return ResponseEntity.ok(userService.findById(id));
   }
 
   @PutMapping(USER + "/{userId}")
-  public ResponseEntity<UserDTO> update(@RequestBody User user,@PathVariable(name = "userId") Long id) {
-	user.setId(id);
-	return ResponseEntity.ok(userService.save(user));
+  public ResponseEntity<UserResponseDTO> update(@RequestBody UserRequestDTO userRequestDTO,@PathVariable(name = "userId") Long id) {
+
+
+	return ResponseEntity.ok(userService.update(userRequestDTO,id));
   }
 
   @DeleteMapping(USER + "/{userId}")

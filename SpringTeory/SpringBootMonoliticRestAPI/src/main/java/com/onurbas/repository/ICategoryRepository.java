@@ -7,7 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public interface ICategoryRepository extends JpaRepository<Category,Long> {
+public interface ICategoryRepository extends JpaRepository<Category, Long> {
 
+  Category findCategoryByCategoryNameIgnoreCase(String name);
 
 }

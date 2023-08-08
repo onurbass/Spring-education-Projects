@@ -1,6 +1,7 @@
 package com.onurbas.mapper;
 
-import com.onurbas.dto.response.PostDTO;
+import com.onurbas.dto.response.PostResponseDTO;
+import com.onurbas.dto.request.PostRequestDTO;
 import com.onurbas.model.Post;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,10 +16,22 @@ public interface IPostMapper {
 
   @Mapping(source = "user.id", target = "userId")
   @Mapping(source = "category.id", target = "categoryId")
-  PostDTO postToPostDTO(Post post);
+  PostResponseDTO postToPostDTO(Post post);
 
   @Mapping(source = "user.id", target = "userId")
   @Mapping(source = "category.id", target = "categoryId")
-  List<PostDTO> postListToPostDTOList(List<Post> postList);
+  List<PostResponseDTO> postListToPostDTOList(List<Post> postList);
+
+
+  @Mapping(source = "userId", target = "user.id")
+  @Mapping(source = "categoryId", target = "category.id")
+  Post postDTOToPost(PostResponseDTO postResponseDTO);
+
+  Post postRequestDTOToPost(PostRequestDTO postRequestDTO);
+  PostRequestDTO postToPostRequestDTO(Post post);
+
+  @Mapping(source = "userId", target = "user.id")
+  @Mapping(source = "categoryId", target = "category.id")
+  List<Post> postDTOListToPostList(List<PostResponseDTO> postResponseDTOList);
 
 }

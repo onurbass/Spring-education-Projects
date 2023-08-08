@@ -1,7 +1,8 @@
 package com.onurbas.controller;
 
-import com.onurbas.dto.response.PostDTO;
-import com.onurbas.model.Post;
+import com.onurbas.dto.response.PostResponseDTO;
+import com.onurbas.dto.request.PostRequestDTO;
+import com.onurbas.model.Category;
 import com.onurbas.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,24 +21,26 @@ public class PostController {
   private final PostService postService;
 
   @PostMapping(POST)
-  public ResponseEntity<PostDTO> save(@RequestBody Post post) {
-	return ResponseEntity.status(HttpStatus.CREATED).body(postService.save(post));
+  public ResponseEntity<PostResponseDTO> save(@RequestBody PostRequestDTO postRequestDTO,
+											  @RequestParam Long userId,
+											  @RequestParam(required = false) Long categoryId) {
+	return ResponseEntity.status(HttpStatus.CREATED).body(postService.save(postRequestDTO,userId,categoryId));
   }
 
   @GetMapping(POST)
-  public ResponseEntity<List<PostDTO>> findAll() {
+  public ResponseEntity<List<PostResponseDTO>> findAll() {
 	return ResponseEntity.ok(postService.findAll());
   }
 
   @GetMapping(POST + "/{postId}")
-  public ResponseEntity<PostDTO> findById(@PathVariable(name = "postId") Long id) {
+  public ResponseEntity<PostResponseDTO> findById(@PathVariable(name = "postId") Long id) {
 	return ResponseEntity.ok(postService.findById(id));
   }
 
   @PutMapping(POST + "/{postId}")
-  public ResponseEntity<PostDTO> update(@RequestBody Post post,@PathVariable(name = "postId") Long id) {
-	post.setId(id);
-	return ResponseEntity.ok(postService.save(post));
+  public ResponseEntity<PostResponseDTO> update(@RequestBody PostResponseDTO postResponseDTO,@PathVariable(name = "postId") Long id) {
+
+	return ResponseEntity.ok(postService.update(postResponseDTO,id,postResponseDTO.getUserId(),postResponseDTO.getCategoryId()));
   }
 
   @DeleteMapping(POST + "/{postId}")
@@ -47,14 +50,26 @@ public class PostController {
   }
 
   @GetMapping(POST + "/category/{categoryId}")
-  public ResponseEntity<List<PostDTO>> findPostsByCategoryId(@PathVariable(name = "categoryId") Long id) {
+  public ResponseEntity<List<PostResponseDTO>> findPostsByCategoryId(@PathVariable(name = "categoryId") Long id) {
 
 	return ResponseEntity.ok(postService.findPostsByCategoryId(id));
   }
 
   @GetMapping(POST + "/user/{userId}")
-  public ResponseEntity<List<PostDTO>> findPostsByUserId(@PathVariable(name = "userId") Long id) {
+  public ResponseEntity<List<PostResponseDTO>> findPostsByUserId(@PathVariable(name = "userId") Long id) {
 
 	return ResponseEntity.ok(postService.findPostsByUserId(id));
+  }
+  @GetMapping(POST +"/orderbydate")
+  public ResponseEntity<List<PostResponseDTO>> getPostsByOrderByDateDesc() {
+	return ResponseEntity.ok(postService.getPostsByOrderByDateDesc());
+  }
+  @GetMapping("/api"+POST+"/findbycategory")
+  public ResponseEntity<List<PostResponseDTO>> findPostsByCategory(@RequestParam(name = "category") String category){
+	return ResponseEntity.ok(postService.findPostsByCategory(category));
+  }
+  @GetMapping("/api"+POST)
+  public ResponseEntity<List<PostResponseDTO>> findPostsByContentContains(@RequestParam(name = "search") String search){
+	return ResponseEntity.ok(postService.findPostsByContentContains(search));
   }
 }
