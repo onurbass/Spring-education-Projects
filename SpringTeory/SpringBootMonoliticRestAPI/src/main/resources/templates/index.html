@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        div {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome to Blog</h1>
+
+<ul>
+    <li th:each="user : ${users}">
+        <a th:href="@{/api/users/{id}(id=${user.id})}" th:text="${user.firstName} ${user.lastName}"></a>
+    </li>
+</ul>
+
+<ul>
+    <li th:each="post : ${posts}">
+        <a th:href="@{/api/posts/{id}(id=${post.id})}" th:text="${post.title}"></a>
+    </li>
+</ul>
+
+<ul>
+    <li th:each="category : ${categories}">
+        <a th:href="@{/api/categories/{id}(id=${category.id})}" th:text="${category.categoryName}"></a>
+    </li>
+</ul>
+
+<div>
+    <a href="api/users/new" class="button">Add New User</a>
+    <a href="api/posts/new" class="button">Add New Post</a>
+    <a href="api/categories/new" class="button">Add New Category</a>
+</div>
+</body>
+</html>

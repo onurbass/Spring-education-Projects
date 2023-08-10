@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Save Post</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h1>Save Post</h1>
+
+    <form action="/api/posts" method="post">
+        <div class="form-group">
+            <label class="form-label" for="title">Title</label>
+            <input type="text" name="title" id="title" class="form-input" placeholder="Title">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="content">Content</label>
+            <input type="text" name="content" id="content" class="form-input" placeholder="Content">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="userId">User ID</label>
+            <input type="text" name="userId" id="userId" class="form-input" placeholder="User ID">
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="categoryId">Category ID</label>
+            <input type="text" name="categoryId" id="categoryId" class="form-input" placeholder="Category ID">
+        </div>
+        <button type="submit" class="form-button">Save</button>
+    </form>
+</div>
+</body>
+</html>
