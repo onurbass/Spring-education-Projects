@@ -54,26 +54,26 @@
 
 <ul>
     <li th:each="user : ${users}">
-        <a th:href="@{/api/users/{id}(id=${user.id})}" th:text="${user.firstName} ${user.lastName}"></a>
+        <a th:href="@{/users/{id}}" th:text="${user.firstName} ${user.lastName}"></a>
     </li>
 </ul>
 
 <ul>
     <li th:each="post : ${posts}">
-        <a th:href="@{/api/posts/{id}(id=${post.id})}" th:text="${post.title}"></a>
+        <a th:href="@{/posts/{id}}" th:text="${post.title}"></a>
     </li>
 </ul>
 
 <ul>
     <li th:each="category : ${categories}">
-        <a th:href="@{/api/categories/{id}(id=${category.id})}" th:text="${category.categoryName}"></a>
+        <a th:href="@{/categories/{id}}" th:text="${category.categoryName}"></a>
     </li>
 </ul>
 
 <div>
-    <a href="api/users/new" class="button">Add New User</a>
-    <a href="api/posts/new" class="button">Add New Post</a>
-    <a href="api/categories/new" class="button">Add New Category</a>
+    <a href="api/v2/users/new" class="button">Add New User</a>
+    <a href="api/v2/posts/new" class="button">Add New Post</a>
+    <a href="api/v2/categories/new" class="button">Add New Category</a>
 </div>
 </body>
 </html>

@@ -58,7 +58,7 @@
 <div class="container">
     <h1>New Category</h1>
 
-    <form th:action="@{/categories}" method="post" id="categoryForm">
+    <form action="/api/v2/categories" method="post" >
         <div class="form-group">
             <label class="form-label" for="categoryName">Category Name</label>
             <input type="text" name="categoryName" id="categoryName" class="form-input" placeholder="Category Name">
@@ -67,31 +67,9 @@
             <label class="form-label" for="description">Description</label>
             <input type="text" name="description" id="description" class="form-input" placeholder="Description">
         </div>
-        <button type="button" class="form-button" onclick="saveCategory()">Save</button>
+        <button type="submit" class="form-button">Save</button>
     </form>
 </div>
-<script>
-    function saveCategory() {
-        var formData = new FormData();
-        formData.append("categoryName", document.getElementById("categoryName").value);
-        formData.append("description", document.getElementById("description").value);
 
-        fetch("/api/categories", {
-            method: "POST",
-            body: formData
-        })
-            .then(response => response.json())
-            .then(result => {
-                if (result.id) {
-                    window.location.href = "/";
-                } else {
-                    alert("An error occurred while saving the category.");
-                }
-            })
-            .catch(error => {
-                console.error("An error occurred:", error);
-            });
-    }
-</script>
 </body>
 </html>

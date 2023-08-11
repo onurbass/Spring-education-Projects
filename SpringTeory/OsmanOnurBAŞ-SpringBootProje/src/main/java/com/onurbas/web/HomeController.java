@@ -19,20 +19,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/v2")
 public class HomeController {
 
   private final UserService userService;
   private final PostService postService;
   private final CategoryService categoryService;
-
   public HomeController(UserService userService, PostService postService,CategoryService categoryService) {
 	this.userService = userService;
 	this.postService = postService;
 	this.categoryService = categoryService;
   }
-
-  @GetMapping
+  @GetMapping("/api/v2")
   public String index(Model model) {
 	List<UserResponseDTO> users = userService.findAll();
 	List<PostResponseDTO> posts = postService.findAll();
@@ -41,7 +39,6 @@ public class HomeController {
 	model.addAttribute("users", users);
 	model.addAttribute("posts", posts);
 	model.addAttribute("categories", categories);
-
 	return "index";
   }
 
@@ -82,29 +79,20 @@ public class HomeController {
   @GetMapping("/posts/new")
   public String newPost(Model model) {
 	Post post = new Post();
-
 	model.addAttribute("post", post);
-
 	return "post-form";
   }
-
   @PostMapping("/posts")
   public String savePost(
 		  @ModelAttribute PostRequestDTO postRequestDTO,
 		  @RequestParam Long userId,
 		  @RequestParam Long categoryId) {
 	Post post = IPostMapper.INSTANCE.postRequestDTOToPost(postRequestDTO);
-
 	post.setTitle(postRequestDTO.getTitle());
 	post.setContent(postRequestDTO.getContent());
-
-
 	post.setUser(userService.getById(userId));
-
 	post.setCategory(categoryService.getById(categoryId));
-
 	postService.save(IPostMapper.INSTANCE.postToPostRequestDTO(post),userId,categoryId);
-
 	return "redirect:/";
   }
 }

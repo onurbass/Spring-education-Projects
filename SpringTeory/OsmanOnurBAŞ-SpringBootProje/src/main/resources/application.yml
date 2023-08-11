@@ -2,8 +2,8 @@
 spring:
   datasource:
     username: postgres
-    password: 123456789
-    url: jdbc:postgresql://localhost:5432/BlogDb
+    password: root
+    url: jdbc:postgresql://localhost:5432/blogdb
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true

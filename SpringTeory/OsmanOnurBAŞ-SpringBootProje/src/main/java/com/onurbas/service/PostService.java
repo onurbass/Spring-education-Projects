@@ -46,38 +46,31 @@ public class PostService {
   }
 
   public PostResponseDTO save(PostRequestDTO postRequestDTO,Long userId,Long categoryId) {
-	try {
-	  if (postRequestDTO == null) {
-		throw new BadRequestException("Post cannot be null");
-	  }
-
-	  User user = userService.getById(userId);
-	  if (user == null) {
-		throw new BadRequestException("User does not exist");
-	  }
-
-	  Category category = categoryService.getById(categoryId);
-	  if (category == null) {
-		throw new BadRequestException("Category does not exist");
-	  }
-		Post post = IPostMapper.INSTANCE.postRequestDTOToPost(postRequestDTO);
-	  post.setUser(user);
-	  post.setCategory(category);
-
-	  Post savedPost = postRepository.save(post);
-
-	  if (savedPost == null) {
-		throw new InternalServerErrorException("An error occurred while saving post");
-	  }
-	  return IPostMapper.INSTANCE.postToPostDTO(savedPost);
-	}  catch (Exception e) {
-	  throw new InternalServerErrorException("An error occurred while saving post: " + e.toString());
+	if (postRequestDTO == null) {
+	  throw new BadRequestException("Post cannot be null");
 	}
+	User user = userService.getById(userId);//Id ile User'ın bulunması
+	if (user == null) {
+	  throw new ResourceNotFoundException("User does not exist");
+	}
+	Category category = categoryService.getById(categoryId);//Id ile Category'nin bulunması
+	if (category == null) {
+	  throw new ResourceNotFoundException("Category does not exist");
+	}
+	Post post = IPostMapper.INSTANCE.postRequestDTOToPost(postRequestDTO);//Mapper dönüşümü
+	//Kaydedilecek Post için User ve Category'nin setlenmesi.
+	post.setUser(user);
+	post.setCategory(category);
+	Post savedPost = postRepository.save(post);
+
+	if (savedPost == null) {
+	  throw new InternalServerErrorException("An error occurred while saving post");
+	}
+	return IPostMapper.INSTANCE.postToPostDTO(savedPost);//Response DTO'nun dönüştürülüp dönülmesi
   }
 
   public PostResponseDTO update(PostResponseDTO postResponseDTO,Long id,Long userId,Long categoryId) {
 	try {
-
 
 	  User user = userService.getById(userId);
 	  if (user == null) {
@@ -98,7 +91,7 @@ public class PostService {
 		throw new InternalServerErrorException("An error occurred while saving post");
 	  }
 	  return IPostMapper.INSTANCE.postToPostDTO(savedPost);
-	}  catch (Exception e) {
+	} catch (Exception e) {
 	  throw new InternalServerErrorException("An error occurred while saving post: " + e.toString());
 	}
   }
@@ -131,14 +124,16 @@ public class PostService {
 	}
 	return posts;
   }
+
   public List<PostResponseDTO> getPostsByOrderByDateDesc() {
-	return IPostMapper.INSTANCE.postListToPostDTOList(postRepository.getPostsByOrderByDateDesc()) ;
+	return IPostMapper.INSTANCE.postListToPostDTOList(postRepository.getPostsByOrderByDateDesc());
   }
 
-  public List<PostResponseDTO> findPostsByCategory(String category){
+  public List<PostResponseDTO> findPostsByCategory(String category) {
 	return IPostMapper.INSTANCE.postListToPostDTOList(postRepository.getPostsByCategoryCategoryName(category));
   }
-  public List<PostResponseDTO> findPostsByContentContains(String search){
+
+  public List<PostResponseDTO> findPostsByContentContains(String search) {
 	return IPostMapper.INSTANCE.postListToPostDTOList(postRepository.getPostsByContentContainingIgnoreCase(search));
   }
 }

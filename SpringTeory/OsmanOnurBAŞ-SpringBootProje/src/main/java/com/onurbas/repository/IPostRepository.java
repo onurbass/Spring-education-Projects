@@ -20,8 +20,7 @@ public interface IPostRepository extends JpaRepository<Post, Long> {
 
   List<Post> getPostsByOrderByDateDesc();
   List<Post> getPostsByCategoryCategoryName(String category);
-  @Query("SELECT p FROM Post p WHERE p.content LIKE '%:keyword%'")
-  List<Post> findPostsByContentContains(String keyword);
+
    List<Post> getPostsByContentContainingIgnoreCase(String keyword);
 
 
