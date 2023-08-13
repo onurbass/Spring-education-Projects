@@ -9,11 +9,8 @@ public class SpringBootMonoliticRestApiApplication {
 
 	public static void main(String[] args) {
 
-		ApplicationContext applicationContext=SpringApplication.run(SpringBootMonoliticRestApiApplication.class,args);
-	  for (String s : applicationContext.getBeanDefinitionNames()
-		   ) {
-		System.out.println(s);
-	  }
+		SpringApplication.run(SpringBootMonoliticRestApiApplication.class,args);
+
 
 	}
 

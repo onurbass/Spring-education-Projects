@@ -10,4 +10,11 @@ spring:
     hibernate:
       ddl-auto: update
 
+  main:
+    banner-mode: off
+  security:
+    user:
+      name: user
+      password: user
+
 
