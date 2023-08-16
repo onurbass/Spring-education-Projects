@@ -1,0 +1,475 @@
+/api/v2/api/v2:
+  get:
+    summary: "GET api/v2/api/v2"
+    operationId: "index"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              type: "string"
+---
+/api/v2/categories:
+  post:
+    summary: "POST api/v2/categories"
+    operationId: "saveCategory"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              type: "string"
+---
+/api/v2/categories/new:
+  get:
+    summary: "GET api/v2/categories/new"
+    operationId: "newCategory"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              type: "string"
+---
+/api/v2/posts:
+  post:
+    summary: "POST api/v2/posts"
+    operationId: "savePost"
+    parameters:
+      - name: "userId"
+        in: "query"
+        required: true
+        schema:
+          type: "integer"
+          format: "int64"
+      - name: "categoryId"
+        in: "query"
+        required: true
+        schema:
+          type: "integer"
+          format: "int64"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              type: "string"
+---
+/api/v2/posts/new:
+  get:
+    summary: "GET api/v2/posts/new"
+    operationId: "newPost"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              type: "string"
+---
+/api/v2/users:
+  post:
+    summary: "POST api/v2/users"
+    operationId: "saveUser"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              type: "string"
+---
+/api/v2/users/new:
+  get:
+    summary: "GET api/v2/users/new"
+    operationId: "newUser"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              type: "string"
+---
+/api/posts:
+  get:
+    summary: "GET api/posts"
+    operationId: "findPostsBySearch"
+    parameters:
+      - name: "search"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "category"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/PostResponseDTO"
+---
+/posts:
+  get:
+    summary: "GET posts"
+    operationId: "findAll"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/PostResponseDTO"
+  post:
+    summary: "POST posts"
+    operationId: "save"
+    parameters:
+      - name: "userId"
+        in: "query"
+        required: true
+        schema:
+          type: "integer"
+          format: "int64"
+      - name: "categoryId"
+        in: "query"
+        required: false
+        schema:
+          type: "integer"
+          format: "int64"
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PostRequestDTO"
+      required: true
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/PostResponseDTO"
+---
+/posts/category/{categoryId}:
+  get:
+    summary: "GET posts/category/{categoryId}"
+    operationId: "findPostsByCategoryId"
+    parameters:
+      - name: "categoryId"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+          format: "int64"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/PostResponseDTO"
+---
+/posts/orderbydate:
+  get:
+    summary: "GET posts/orderbydate"
+    operationId: "getPostsByOrderByDateDesc"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/PostResponseDTO"
+---
+/posts/user/{userId}:
+  get:
+    summary: "GET posts/user/{userId}"
+    operationId: "findPostsByUserId"
+    parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+          format: "int64"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/PostResponseDTO"
+---
+/posts/{postId}:
+  get:
+    summary: "GET posts/{postId}"
+    operationId: "findById"
+    parameters:
+      - name: "postId"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+          format: "int64"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/PostResponseDTO"
+  put:
+    summary: "PUT posts/{postId}"
+    operationId: "update"
+    parameters:
+      - name: "postId"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+          format: "int64"
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PostResponseDTO"
+      required: true
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/PostResponseDTO"
+  delete:
+    summary: "DELETE posts/{postId}"
+    operationId: "deleteById"
+    parameters:
+      - name: "postId"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+          format: "int64"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/Void"
+---
+/users:
+  get:
+    summary: "GET users"
+    operationId: "findAll"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/UserResponseDTO"
+  post:
+    summary: "POST users"
+    operationId: "save"
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UserRequestDTO"
+      required: true
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/UserResponseDTO"
+---
+/users/{userId}:
+  get:
+    summary: "GET users/{userId}"
+    operationId: "findById"
+    parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+          format: "int64"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/UserResponseDTO"
+  put:
+    summary: "PUT users/{userId}"
+    operationId: "update"
+    parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+          format: "int64"
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UserRequestDTO"
+      required: true
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/UserResponseDTO"
+  delete:
+    summary: "DELETE users/{userId}"
+    operationId: "deleteById"
+    parameters:
+      - name: "userId"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+          format: "int64"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/Void"
+---
+/categories:
+  get:
+    summary: "GET categories"
+    operationId: "findAll"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/CategoryDTO"
+  post:
+    summary: "POST categories"
+    operationId: "save"
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CategoryDTO"
+      required: true
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/CategoryDTO"
+---
+/categories/findbyname/{name}:
+  get:
+    summary: "GET categories/findbyname/{name}"
+    operationId: "findCategoryByCategoryNameIgnoreCase"
+    parameters:
+      - name: "name"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/CategoryDTO"
+---
+/categories/{categoryId}:
+  get:
+    summary: "GET categories/{categoryId}"
+    operationId: "findById"
+    parameters:
+      - name: "categoryId"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+          format: "int64"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/CategoryDTO"
+  put:
+    summary: "PUT categories/{categoryId}"
+    operationId: "update"
+    parameters:
+      - name: "categoryId"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+          format: "int64"
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CategoryDTO"
+      required: true
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/CategoryDTO"
+  delete:
+    summary: "DELETE categories/{categoryId}"
+    operationId: "deleteById"
+    parameters:
+      - name: "categoryId"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+          format: "int64"
+    responses:
+      "200":
+        description: "OK"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/Void"
