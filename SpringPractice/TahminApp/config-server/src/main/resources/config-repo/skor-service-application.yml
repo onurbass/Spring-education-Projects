@@ -1,0 +1,18 @@
+server:
+  port: 9093
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: mustafa
+    password: 123
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: root
+    url: jdbc:postgresql://localhost:5432/Java9TahminDB
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

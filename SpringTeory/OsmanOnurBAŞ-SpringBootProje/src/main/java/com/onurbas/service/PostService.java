@@ -45,6 +45,7 @@ public class PostService {
 	return postResponseDTO;
   }
 
+ 
   public PostResponseDTO save(PostRequestDTO postRequestDTO,Long userId,Long categoryId) {
 	if (postRequestDTO == null) {
 	  throw new BadRequestException("Post cannot be null");

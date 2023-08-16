@@ -1,0 +1,4 @@
+rootProject.name = 'SocialMedia'
+include 'auth-service'
+include 'user-service'
+

@@ -1,0 +1,17 @@
+server:
+  port: 7071
+
+spring:
+  main:
+    banner-mode: off
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/SocialUser
+    username: postgres
+    password: 123456789
+    driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+
