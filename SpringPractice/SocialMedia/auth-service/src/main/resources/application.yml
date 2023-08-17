@@ -2,16 +2,12 @@ server:
   port: 7070
 
 spring:
-  main:
-    banner-mode: off
-
   datasource:
-    url: jdbc:postgresql://localhost:5432/SocialAuth
     username: postgres
     password: 123456789
+    url: jdbc:postgresql://localhost:5432/Java10SocialAuth
     driver-class-name: org.postgresql.Driver
-    jpa:
-        hibernate:
-            ddl-auto: update
-        show-sql: true
-
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update

@@ -64,14 +64,7 @@ public class PostController {
   public ResponseEntity<List<PostResponseDTO>> getPostsByOrderByDateDesc() {
 	return ResponseEntity.ok(postService.getPostsByOrderByDateDesc());
   }
-/*  @GetMapping("/api"+POST+"/findbycategory")
-  public ResponseEntity<List<PostResponseDTO>> findPostsByCategory(@RequestParam(name = "category") String category){
-	return ResponseEntity.ok(postService.findPostsByCategory(category));
-  }
-  @GetMapping("/api"+POST)
-  public ResponseEntity<List<PostResponseDTO>> findPostsByContentContains(@RequestParam(name = "search") String search){
-	return ResponseEntity.ok(postService.findPostsByContentContains(search));
-  }*/
+
  @GetMapping("/api"+POST)
  public ResponseEntity<List<PostResponseDTO>> findPostsBySearch(
 		 @RequestParam(name = "search", required = false) String search,

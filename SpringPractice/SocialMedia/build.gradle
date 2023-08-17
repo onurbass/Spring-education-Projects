@@ -1,7 +1,7 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.12'
-    id 'io.spring.dependency-management' version "1.0.15.RELEASE"
+    id 'org.springframework.boot' version '2.7.9'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'application'
 }
 
@@ -17,8 +17,8 @@ allprojects {
 }
 
 subprojects {
-    group = 'com.onurbas'
-    version = 'v.0.0.1'
+    group 'com.socialmedia'
+    version 'v.0.0.1'
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
     tasks.withType(JavaCompile) {
@@ -27,32 +27,23 @@ subprojects {
 }
 
 allprojects {
-
     repositories {
         mavenCentral()
-        google()
     }
     buildscript {
         repositories {
             mavenCentral()
         }
     }
+
     dependencies {
         implementation libs.springBootWeb
-        implementation libs.springBootValidation
         implementation libs.lombok
         annotationProcessor libs.lombok
-        implementation libs.mapStruct
-        annotationProcessor libs.mapStructProcessor
-        implementation libs.openApi
-        /*  implementation libs.javaJwt
-          implementation libs.springCloudOpenFeign
-          implementation libs.springCloudZipkin
-          implementation libs.springCloudSleuth
-          implementation libs.springBootRabbitMq
-          implementation libs.springBootDataRedis*/
+        implementation libs.mapstruct
+        annotationProcessor libs.mapstructProcessor
+        implementation libs.openapi
     }
-
 }
 
 configurations {
