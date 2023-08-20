@@ -4,7 +4,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
-    password: root
+    password: 123456789
     url: jdbc:postgresql://localhost:5432/JavaMicroMusteriDB
   jpa:
     hibernate:

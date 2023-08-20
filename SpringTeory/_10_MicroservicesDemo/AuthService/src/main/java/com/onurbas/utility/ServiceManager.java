@@ -11,6 +11,7 @@ public class ServiceManager<T,ID> implements IService<T,ID>{
     public ServiceManager(JpaRepository<T, ID> repository) {
         this.repository = repository;
     }
+
     @Override
     public T save(T t) {
         return repository.save(t);
@@ -19,10 +20,12 @@ public class ServiceManager<T,ID> implements IService<T,ID>{
     public Iterable<T> saveAll(Iterable<T> t) {
         return repository.saveAll(t);
     }
+
     @Override
     public T update(T t) {
         return repository.save(t);
     }
+
     @Override
     public void delete(T t) {
         repository.delete(t);
@@ -31,6 +34,7 @@ public class ServiceManager<T,ID> implements IService<T,ID>{
     public void deleteById(ID id) {
         repository.deleteById(id);
     }
+
     @Override
     public Optional<T> findById(ID id) {
         return repository.findById(id);
@@ -39,4 +43,5 @@ public class ServiceManager<T,ID> implements IService<T,ID>{
     public List<T> findAll() {
         return repository.findAll();
     }
+
 }
