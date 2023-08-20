@@ -29,15 +29,13 @@ public class UserController {
 	return ResponseEntity.ok(userService.findAll());
   }
 
-  @GetMapping(USER + "/{userId}")
+  @GetMapping(USER + "/{userId}") //localhost:8080/users/1
   public ResponseEntity<UserResponseDTO> findById(@PathVariable(name = "userId") Long id) {
 	return ResponseEntity.ok(userService.findById(id));
   }
 
   @PutMapping(USER + "/{userId}")
   public ResponseEntity<UserResponseDTO> update(@RequestBody UserRequestDTO userRequestDTO,@PathVariable(name = "userId") Long id) {
-
-
 	return ResponseEntity.ok(userService.update(userRequestDTO,id));
   }
 

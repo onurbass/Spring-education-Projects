@@ -23,5 +23,4 @@ public class Category {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "category", fetch = FetchType.LAZY)
   @ToString.Exclude
   private List<Post> posts;
-
 }

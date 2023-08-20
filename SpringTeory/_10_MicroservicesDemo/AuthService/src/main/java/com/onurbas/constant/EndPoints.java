@@ -17,4 +17,5 @@ public class EndPoints {
   public static final String GETBYAD = "/getbyad";
   public static final String GETALLBYIL = "/getAllByIl";
 
+  public static final String REGISTER = "/register";
 }

@@ -1,15 +1,13 @@
 package com.socialmedia.controller;
 
+import com.socialmedia.dto.request.ActivationRequestDto;
 import com.socialmedia.dto.request.LoginRequestDto;
 import com.socialmedia.dto.request.RegisterRequestDto;
 import com.socialmedia.dto.response.RegisterResponseDto;
 import com.socialmedia.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -32,5 +30,9 @@ public class AuthController {
 
 
     }
+    @PutMapping("/activation")
+    public ResponseEntity<Boolean> isActivate(@RequestBody ActivationRequestDto dto){
+        return ResponseEntity.ok(authService.isActivationMatch(dto));
 
+    }
 }

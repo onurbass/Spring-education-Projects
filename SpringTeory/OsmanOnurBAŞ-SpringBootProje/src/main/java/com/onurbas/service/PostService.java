@@ -114,7 +114,6 @@ public class PostService {
 	if (posts.isEmpty()) {
 	  throw new ResourceNotFoundException("No posts found for user with id: " + id);
 	}
-
 	return posts;
   }
 

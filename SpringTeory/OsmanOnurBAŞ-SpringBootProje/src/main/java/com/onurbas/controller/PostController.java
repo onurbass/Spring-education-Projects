@@ -23,7 +23,8 @@ public class PostController {
   @PostMapping(POST)
   public ResponseEntity<PostResponseDTO> save(@RequestBody PostRequestDTO postRequestDTO,
 											  @RequestParam Long userId,
-											  @RequestParam(required = false) Long categoryId) {
+											  @RequestParam(required = false) Long categoryId
+											 ) {
 	return ResponseEntity.status(HttpStatus.CREATED).body(postService.save(postRequestDTO,userId,categoryId));
   }
 
@@ -60,28 +61,29 @@ public class PostController {
 
 	return ResponseEntity.ok(postService.findPostsByUserId(id));
   }
-  @GetMapping(POST +"/orderbydate")
+
+  @GetMapping(POST + "/orderbydate")
   public ResponseEntity<List<PostResponseDTO>> getPostsByOrderByDateDesc() {
 	return ResponseEntity.ok(postService.getPostsByOrderByDateDesc());
   }
 
- @GetMapping("/api"+POST)
- public ResponseEntity<List<PostResponseDTO>> findPostsBySearch(
-		 @RequestParam(name = "search", required = false) String search,
-		 @RequestParam(name = "category", required = false) String category) {
+  @GetMapping("/api" + POST)
+  public ResponseEntity<List<PostResponseDTO>> findPostsBySearch(
+		  @RequestParam(name = "search", required = false) String search,
+		  @RequestParam(name = "category", required = false) String category) {
 
-   List<PostResponseDTO> result;
+	List<PostResponseDTO> result;
 
-   if (search != null) {
-	 result = postService.findPostsByContentContains(search);
-   } else if (category != null) {
-	 result = postService.findPostsByCategory(category);
-   } else {
+	if (search != null) {
+	  result = postService.findPostsByContentContains(search);
+	} else if (category != null) {
+	  result = postService.findPostsByCategory(category);
+	} else {
 
-	 return ResponseEntity.badRequest().build();
-   }
+	  return ResponseEntity.badRequest().build();
+	}
 
-   return ResponseEntity.ok(result);
- }
+	return ResponseEntity.ok(result);
+  }
 }
 

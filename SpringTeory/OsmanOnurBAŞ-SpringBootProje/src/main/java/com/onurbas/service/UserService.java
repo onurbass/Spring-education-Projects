@@ -32,14 +32,15 @@ public class UserService {
 	if (id <= 0) {
 	  throw new BadRequestException("Invalid user ID: " + id);
 	}
-
 	Optional<User> userOptional = userRepository.findById(id);
 	if (userOptional.isEmpty()) {
 	  throw new ResourceNotFoundException("User not found with ID: " + id);
 	}
-	UserResponseDTO userResponseDTO = IUserMapper.INSTANCE.userToUserDto(userRepository.findById(id).get());
+	UserResponseDTO userResponseDTO = IUserMapper.INSTANCE.userToUserDto(userOptional.get());
 	return userResponseDTO;
   }
+
+
   public User getById(Long id) {
 	if (id <= 0) {
 	  throw new BadRequestException("Invalid user ID: " + id);
