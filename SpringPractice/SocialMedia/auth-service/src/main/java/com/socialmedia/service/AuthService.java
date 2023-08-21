@@ -1,6 +1,6 @@
 package com.socialmedia.service;
 
-import com.socialmedia.convertor.Convertor;
+
 import com.socialmedia.dto.request.ActivationRequestDto;
 import com.socialmedia.dto.request.LoginRequestDto;
 import com.socialmedia.dto.request.RegisterRequestDto;
@@ -12,7 +12,6 @@ import com.socialmedia.repository.enums.EStatus;
 import com.socialmedia.utility.CodeGenerator;
 import com.socialmedia.utility.ServiceManager;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 /*
@@ -40,8 +39,8 @@ public class AuthService extends ServiceManager<Auth, Long> {
   public RegisterResponseDto register(RegisterRequestDto dto) {
 
 	//max 5 parametreden sonra kesinlikle dto kullanın
-	//Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
-	Auth auth = Convertor.convertFromDtoToAuth(dto);
+	Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
+
 
 	auth.setActivationCode(CodeGenerator.generatedCode());
 	save(auth);

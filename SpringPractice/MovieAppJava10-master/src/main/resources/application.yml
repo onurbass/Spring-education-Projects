@@ -1,12 +1,16 @@
 server:
   port: 8090
 spring:
-  datasource:
+#  h2:
+#    console:
+#      enabled: true
+   datasource:
     username: postgres
     password: 123456789
-    url: jdbc:postgresql://localhost:5432/MovieDb
+    url: jdbc:postgresql://java10-postgres/movieapp
     driver-class-name: org.postgresql.Driver
-  jpa:
+   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
+

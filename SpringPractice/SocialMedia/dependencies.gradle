@@ -1,15 +1,15 @@
 ext {
     versions = [
-            springBoot: "2.7.9",
-            postgresql: "42.5.4",
-            lombok    : "1.18.26",
+            springBoot: "2.7.12",
+            postgresql: "42.6.0",
+            lombok    : "1.18.28",
             mapstruct : "1.5.5.Final",
-            openapi   : "1.6.14",
+            openapi   : "1.7.0",
 
 
     ]
 
-    // ctrl + alt + l formatlar
+
     libs = [
             springBootWeb     : "org.springframework.boot:spring-boot-starter-web:$versions.springBoot",
             springBootJpa     : "org.springframework.boot:spring-boot-starter-data-jpa:$versions.springBoot",
@@ -18,8 +18,6 @@ ext {
             mapstruct         : "org.mapstruct:mapstruct:$versions.mapstruct",
             mapstructProcessor: "org.mapstruct:mapstruct-processor:$versions.mapstruct",
             openapi           : "org.springdoc:springdoc-openapi-ui:$versions.openapi",
-
-
     ]
 
 
