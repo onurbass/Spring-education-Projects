@@ -1,4 +1,0 @@
-rootProject.name = '_10_MicroservicesDemo'
-include 'AuthService'
-include 'MusteriService'
-

@@ -46,6 +46,8 @@ allprojects {
         implementation libs.mapstruct
         annotationProcessor libs.mapstructProcessor
         implementation libs.openapi
+        implementation libs.springBootValidation
+        implementation libs.javaJwt
     }
 }
 

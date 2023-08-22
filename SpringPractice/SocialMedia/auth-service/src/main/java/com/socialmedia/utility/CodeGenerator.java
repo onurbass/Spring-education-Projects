@@ -10,7 +10,7 @@ public class CodeGenerator {
     // ad4be
     // metotda bize string olarak kodu döndürsün
 
-    public static String generatedCode() {
+    public static String generateCode() {
         String uuid = UUID.randomUUID().toString();
         String[] data = uuid.split("-");
         String newCode = "";

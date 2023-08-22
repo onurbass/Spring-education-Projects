@@ -9,30 +9,32 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
+import static com.socialmedia.constant.EndPoints.*;
+
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(AUTH)
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
+  private final AuthService authService;
 
+  @PostMapping(REGISTER)
+  public ResponseEntity<RegisterResponseDto> register(@RequestBody @Valid RegisterRequestDto dto) {
+	return ResponseEntity.ok(authService.register(dto));
 
-    @PostMapping("/register")
-    public ResponseEntity<RegisterResponseDto> register(@RequestBody RegisterRequestDto dto) {
-        return ResponseEntity.ok(authService.register(dto));
+  }
 
+  @PostMapping(LOGIN)
+  public ResponseEntity<Boolean> login(@RequestBody LoginRequestDto dto) {
+	return ResponseEntity.ok(authService.login(dto));
 
-    }
+  }
 
-    @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestBody LoginRequestDto dto) {
-        return ResponseEntity.ok(authService.login(dto));
+  @PostMapping(ACTIVATE_STATUS)
+  public ResponseEntity<String> activateStatus(@RequestBody ActivationRequestDto dto ){
 
-
-    }
-    @PutMapping("/activation")
-    public ResponseEntity<Boolean> isActivate(@RequestBody ActivationRequestDto dto){
-        return ResponseEntity.ok(authService.isActivationMatch(dto));
-
-    }
+	return  ResponseEntity.ok(authService.activateStatus(dto));
+  }
 }
