@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ActivationRequestDto {
 
-    private Long id;
+    
     private String activationCode;
+    private String token;
 }

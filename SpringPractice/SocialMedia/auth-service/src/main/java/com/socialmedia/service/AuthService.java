@@ -66,7 +66,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
 	return responseDto;
   }
 
-  public Boolean login(LoginRequestDto dto) {
+  public String login(LoginRequestDto dto) {
 	Optional<Auth> optionalAuth = authRepository.findOptionalByUsernameAndPassword(dto.getUsername(),dto.getPassword());
 	if (optionalAuth.isEmpty()) {
 	  throw new AuthManagerException(ErrorType.USER_NOT_FOUND);
@@ -74,11 +74,20 @@ public class AuthService extends ServiceManager<Auth, Long> {
 	if (!optionalAuth.get().getStatus().equals(EStatus.ACTIVE)) {
 	  throw new AuthManagerException(ErrorType.ACCOUNT_NOT_ACTIVE);
 	}
-	return true;
+
+	return jwtTokenManager.createToken(optionalAuth.get().getId())
+						  .orElseThrow(() -> {
+							throw new AuthManagerException(ErrorType.INVALID_TOKEN);
+						  });
+
   }
 
   public String activateStatus(ActivationRequestDto dto) {
-	Optional<Auth> optionalAuth = findById(dto.getId());
+
+	Optional<Auth> optionalAuth = findById(jwtTokenManager.getIdFromToken(dto.getToken()).orElseThrow(() -> {
+	  throw new AuthManagerException(ErrorType.INVALID_TOKEN);
+	}));
+
 
 	if (optionalAuth.isEmpty()) {
 	  throw new AuthManagerException(ErrorType.USER_NOT_FOUND);
