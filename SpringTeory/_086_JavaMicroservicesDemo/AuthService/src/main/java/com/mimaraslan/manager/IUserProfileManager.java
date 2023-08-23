@@ -1,6 +1,6 @@
 package com.mimaraslan.manager;
 
-import com.mimaraslan.dto.UserProfileSaveRequestDto;
+import com.mimaraslan.dto.request.UserProfileSaveRequestDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,5 +13,5 @@ import static com.mimaraslan.constant.EndPoints.*;
 		, decode404 = true)
 public interface IUserProfileManager {
   @PostMapping(SAVE)
-  public ResponseEntity<Boolean> save(@RequestBody UserProfileSaveRequestDto dto);
+   ResponseEntity<Boolean> save(@RequestBody UserProfileSaveRequestDto dto);
 }

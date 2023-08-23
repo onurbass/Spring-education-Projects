@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 public class SpringBootMonoliticRestApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootMonoliticRestApiApplication.class,args);
+	ApplicationContext applicationContext=	SpringApplication.run(SpringBootMonoliticRestApiApplication.class,args);
+
 	}
 }

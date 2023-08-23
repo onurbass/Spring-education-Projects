@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Entity
 public class Post {
 
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -31,5 +30,6 @@ public class Post {
   @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.LAZY)
   @ToString.Exclude
   private Category category;
+
 
 }

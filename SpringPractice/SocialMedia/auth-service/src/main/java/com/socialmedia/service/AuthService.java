@@ -1,6 +1,5 @@
 package com.socialmedia.service;
 
-
 import com.socialmedia.dto.request.ActivationRequestDto;
 import com.socialmedia.dto.request.LoginRequestDto;
 import com.socialmedia.dto.request.RegisterRequestDto;
@@ -12,9 +11,10 @@ import com.socialmedia.repository.IAuthRepository;
 import com.socialmedia.repository.entity.Auth;
 import com.socialmedia.repository.enums.EStatus;
 import com.socialmedia.utility.CodeGenerator;
+import com.socialmedia.utility.JWTTokenManager;
 import com.socialmedia.utility.ServiceManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.util.Optional;
 
@@ -42,19 +42,22 @@ import java.util.Optional;
 public class AuthService extends ServiceManager<Auth, Long> {
 
   private final IAuthRepository authRepository;
+  private final JWTTokenManager jwtTokenManager;
 
-  public AuthService(IAuthRepository authRepository) {
+
+  public AuthService(IAuthRepository authRepository,JWTTokenManager jwtTokenManager) {
 	super(authRepository);
 	this.authRepository = authRepository;
+	this.jwtTokenManager = jwtTokenManager;
   }
 
-  public RegisterResponseDto register(RegisterRequestDto dto){
+  public RegisterResponseDto register(RegisterRequestDto dto) {
 
 	Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
 	auth.setActivationCode(CodeGenerator.generateCode());
 	try {
 	  save(auth);
-	}catch (Exception e){
+	} catch (Exception e) {
 	  throw new RuntimeException("Kayıt başarısız!!!!");
 	}
 
@@ -62,32 +65,32 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
 	return responseDto;
   }
-  public Boolean login(LoginRequestDto dto){
-	Optional<Auth> optionalAuth = authRepository.findOptionalByUsernameAndPassword(dto.getUsername(), dto.getPassword());
-	if(optionalAuth.isEmpty()){
+
+  public Boolean login(LoginRequestDto dto) {
+	Optional<Auth> optionalAuth = authRepository.findOptionalByUsernameAndPassword(dto.getUsername(),dto.getPassword());
+	if (optionalAuth.isEmpty()) {
 	  throw new AuthManagerException(ErrorType.USER_NOT_FOUND);
 	}
-	if(!optionalAuth.get().getStatus().equals(EStatus.ACTIVE)){
+	if (!optionalAuth.get().getStatus().equals(EStatus.ACTIVE)) {
 	  throw new AuthManagerException(ErrorType.ACCOUNT_NOT_ACTIVE);
 	}
 	return true;
   }
 
-
-  public String activateStatus(ActivationRequestDto dto){
+  public String activateStatus(ActivationRequestDto dto) {
 	Optional<Auth> optionalAuth = findById(dto.getId());
 
-	if(optionalAuth.isEmpty()){
+	if (optionalAuth.isEmpty()) {
 	  throw new AuthManagerException(ErrorType.USER_NOT_FOUND);
 	}
-	if(optionalAuth.get().getStatus().equals(EStatus.ACTIVE)){
+	if (optionalAuth.get().getStatus().equals(EStatus.ACTIVE)) {
 	  throw new AuthManagerException(ErrorType.ALREADY_ACTIVE);
 	}
-	if(dto.getActivationCode().equals(optionalAuth.get().getActivationCode())){
+	if (dto.getActivationCode().equals(optionalAuth.get().getActivationCode())) {
 	  optionalAuth.get().setStatus(EStatus.ACTIVE);
 	  update(optionalAuth.get());
 	  return "Hesabınız aktif edilmiştir";
-	}else {
+	} else {
 	  throw new AuthManagerException(ErrorType.INVALID_CODE);
 	}
   }

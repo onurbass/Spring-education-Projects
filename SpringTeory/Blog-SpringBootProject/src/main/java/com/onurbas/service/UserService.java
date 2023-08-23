@@ -40,7 +40,6 @@ public class UserService {
 	return userResponseDTO;
   }
 
-
   public User getById(Long id) {
 	if (id <= 0) {
 	  throw new BadRequestException("Invalid user ID: " + id);
@@ -53,24 +52,30 @@ public class UserService {
 
 	return userOptional.get();
   }
+
   public UserResponseDTO save(UserRequestDTO userRequestDTO) {
 	try {
 	  if (userRequestDTO == null) {
 		throw new BadRequestException("User cannot be null");
 	  }
-	  User savedUser = userRepository.save(IUserMapper.INSTANCE.userRequestDTOToUser(userRequestDTO));
+	  User savedUser = IUserMapper.INSTANCE.userRequestDTOToUser(userRequestDTO);
+
+	  userRepository.save(savedUser);
+
 	  UserResponseDTO savedUserToUserResponseDTO = IUserMapper.INSTANCE.userToUserDto(savedUser);
 	  return savedUserToUserResponseDTO;
 	} catch (Exception e) {
 	  throw new InternalServerErrorException("An error occurred while saving user");
 	}
   }
-public UserResponseDTO update(UserRequestDTO userRequestDTO,Long id){
-  userRequestDTO.setId(id);
+
+  public UserResponseDTO update(UserRequestDTO userRequestDTO,Long id) {
+	userRequestDTO.setId(id);
 	User user = IUserMapper.INSTANCE.userRequestDTOToUser(userRequestDTO);
 	User updatedUser = userRepository.save(user);
 	return IUserMapper.INSTANCE.userToUserDto(updatedUser);
-}
+  }
+
   public void deleteById(Long id) {
 	Optional<User> user = userRepository.findById(id);
 	try {

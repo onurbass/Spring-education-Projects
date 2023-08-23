@@ -44,7 +44,7 @@ public class JWTTokenManager {
 	  Long id = decodedJWT.getClaim("myId").asLong();
 	  return Optional.of(id);
 	} catch (Exception e) {
-	  throw new AuthManagerException(ErrorType.INVALID_TOKEN)
+	  throw new AuthManagerException(ErrorType.INVALID_TOKEN);
 	}
 
   }

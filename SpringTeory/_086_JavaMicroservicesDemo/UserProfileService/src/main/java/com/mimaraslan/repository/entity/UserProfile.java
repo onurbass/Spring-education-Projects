@@ -17,7 +17,7 @@ public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
-    private Long authid;
+    private Long authId;
     private String username;
     private String email;
 
