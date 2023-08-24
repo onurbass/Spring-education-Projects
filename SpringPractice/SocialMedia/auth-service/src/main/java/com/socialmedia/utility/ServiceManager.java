@@ -10,55 +10,55 @@ import java.util.Optional;
 
 @Getter
 @RequiredArgsConstructor
-public class ServiceManager<T extends BaseEntity, ID> implements IService<T, ID>{
+public class ServiceManager<T extends BaseEntity,ID> implements IService<T, ID> {
 
-    private final JpaRepository<T, ID> repository;
+  private final JpaRepository<T, ID> repository;
 
-    @Override
-    public T save(T t) {
-        t.setCreateDate(System.currentTimeMillis());
-        t.setUpdateDate(System.currentTimeMillis());
+  @Override
+  public T save(T t) {
+	t.setCreateDate(System.currentTimeMillis());
+	t.setUpdateDate(System.currentTimeMillis());
 
-        return repository.save(t);
-    }
+	return repository.save(t);
+  }
 
-    @Override
-    public Iterable<T> saveAll(Iterable<T> t) {
-        t.forEach(x -> {
-            x.setCreateDate(System.currentTimeMillis());
-            x.setUpdateDate(System.currentTimeMillis());
+  @Override
+  public Iterable<T> saveAll(Iterable<T> t) {
+	t.forEach(x -> {
+	  x.setCreateDate(System.currentTimeMillis());
+	  x.setUpdateDate(System.currentTimeMillis());
 
-        });
-        return repository.saveAll(t);
-    }
+	});
+	return repository.saveAll(t);
+  }
 
-    @Override
-    public T update(T t) {
-        t.setUpdateDate(System.currentTimeMillis());
-        return repository.save(t);
-    }
+  @Override
+  public T update(T t) {
+	t.setUpdateDate(System.currentTimeMillis());
+	return repository.save(t);
+  }
 
-    @Override
-    public void delete(T t) {
+  @Override
+  public void delete(T t) {
 
-        repository.delete(t);
-    }
+	repository.delete(t);
+  }
 
-    @Override
-    public void deleteById(ID id) {
+  @Override
+  public void deleteById(ID id) {
 
-        repository.deleteById(id);
-    }
+	repository.deleteById(id);
+  }
 
-    @Override
-    public List<T> findAll() {
+  @Override
+  public List<T> findAll() {
 
-        return repository.findAll();
-    }
+	return repository.findAll();
+  }
 
-    @Override
-    public Optional<T> findById(ID id) {
+  @Override
+  public Optional<T> findById(ID id) {
 
-        return repository.findById(id);
-    }
+	return repository.findById(id);
+  }
 }

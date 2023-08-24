@@ -44,7 +44,6 @@ public class AuthService extends ServiceManager<Auth, Long> {
   private final IAuthRepository authRepository;
   private final JWTTokenManager jwtTokenManager;
 
-
   public AuthService(IAuthRepository authRepository,JWTTokenManager jwtTokenManager) {
 	super(authRepository);
 	this.authRepository = authRepository;
@@ -62,7 +61,11 @@ public class AuthService extends ServiceManager<Auth, Long> {
 	}
 
 	RegisterResponseDto responseDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
-
+	String token = jwtTokenManager.createToken(auth.getId())
+								  .orElseThrow(() -> {
+									throw new AuthManagerException(ErrorType.INVALID_TOKEN);
+								  });
+	responseDto.setToken(token);
 	return responseDto;
   }
 
@@ -74,12 +77,9 @@ public class AuthService extends ServiceManager<Auth, Long> {
 	if (!optionalAuth.get().getStatus().equals(EStatus.ACTIVE)) {
 	  throw new AuthManagerException(ErrorType.ACCOUNT_NOT_ACTIVE);
 	}
-
-	return jwtTokenManager.createToken(optionalAuth.get().getId())
-						  .orElseThrow(() -> {
-							throw new AuthManagerException(ErrorType.INVALID_TOKEN);
-						  });
-
+	return jwtTokenManager.createToken(optionalAuth.get().getId(),optionalAuth.get().getRole()).orElseThrow(() -> {
+	  throw new AuthManagerException(ErrorType.TOKEN_NOT_CREATED);
+	});
   }
 
   public String activateStatus(ActivationRequestDto dto) {
@@ -87,7 +87,6 @@ public class AuthService extends ServiceManager<Auth, Long> {
 	Optional<Auth> optionalAuth = findById(jwtTokenManager.getIdFromToken(dto.getToken()).orElseThrow(() -> {
 	  throw new AuthManagerException(ErrorType.INVALID_TOKEN);
 	}));
-
 
 	if (optionalAuth.isEmpty()) {
 	  throw new AuthManagerException(ErrorType.USER_NOT_FOUND);

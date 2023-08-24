@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class RegisterResponseDto {
-    private Long id;
+    private Long id; //şart değil görmek için tutuyoruz
+    private String token;
     private String activationCode;
     private String username;
 

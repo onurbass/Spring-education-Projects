@@ -11,3 +11,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+jwt:
+  secretKey: ${JAVA_SECRETKEY}
+  issuer: ${JAVA_ISSUER}
