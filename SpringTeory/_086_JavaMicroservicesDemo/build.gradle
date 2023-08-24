@@ -72,7 +72,8 @@ allprojects {
         annotationProcessor libs.mapStructProcessor
         implementation libs.swaggerApi
         implementation libs.jwt
-        implementation libs.springBootCloud
+        implementation libs.springCloudOpenfeign
+        implementation libs.springCloudConfigClient
     }
 }
 

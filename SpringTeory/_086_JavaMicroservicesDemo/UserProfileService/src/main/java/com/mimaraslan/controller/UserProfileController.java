@@ -11,7 +11,6 @@ import java.util.List;
 
 import static com.mimaraslan.constant.EndPoints.*;
 
-
 //  http://localhost:9093/user
 @RequiredArgsConstructor
 @RestController
@@ -25,10 +24,17 @@ public class UserProfileController {
    public ResponseEntity<Boolean> save(@RequestBody UserProfileSaveRequestDto dto){
        return ResponseEntity.ok(userProfileService.saveDto(dto));
    }
- // Tokensiz
-    //  http://localhost:9090/auth/getall
+
+    //  http://localhost:9093/user/getall
     @GetMapping(GETALL)
-    public ResponseEntity<List<UserProfile>> findAll() {
+    public ResponseEntity<List<UserProfile>> findAll () {
         return ResponseEntity.ok(userProfileService.findAll());
     }
+
+    // http://localhost:9093/user/hi
+    @GetMapping("/hi")
+    public String hi() {
+        return "Hi: UserProfile Service";
+    }
+
 }

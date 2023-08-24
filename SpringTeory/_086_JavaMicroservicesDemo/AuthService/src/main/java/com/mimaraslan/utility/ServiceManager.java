@@ -1,12 +1,9 @@
 package com.mimaraslan.utility;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
-
 
 public class ServiceManager<T,ID> implements IService<T,ID>{
 

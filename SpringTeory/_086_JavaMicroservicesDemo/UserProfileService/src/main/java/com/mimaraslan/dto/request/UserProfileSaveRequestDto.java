@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor //dolu constructor oluşturur.
 public class UserProfileSaveRequestDto {
 
-  private   Long authId;
-  private   String username;
-  private   String email;
+    private Long authid;
+    private String username;
+    private String email;
 
 }

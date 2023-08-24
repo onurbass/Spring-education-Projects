@@ -1,0 +1,24 @@
+server:
+  port: 8888
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${GIT_CONFIG_PROJECT}
+          default-label: main
+          skip-ssl-validation: true
+          username: ${GIT_USERNAME}
+          password: ${GIT_TOKEN_KEY}
+
+#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
+#spring:
+#    profiles:
+#      active: native
+#    cloud:
+#      config:
+#        server:
+#          native:
+#            search-locations: classpath:/config-repo
+

@@ -11,6 +11,6 @@ public interface IUserProfileMapper {
 
     IUserProfileMapper INSTANCE= Mappers.getMapper(IUserProfileMapper.class);
 
-    UserProfile toUserProfileSaveRequestDto (final UserProfileSaveRequestDto dto);
+    UserProfile toUserProfile(final UserProfileSaveRequestDto dto);
 
 }
