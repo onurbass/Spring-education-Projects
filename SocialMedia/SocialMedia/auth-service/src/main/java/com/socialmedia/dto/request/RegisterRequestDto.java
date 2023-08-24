@@ -10,17 +10,19 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class RegisterRequestDto {
-  @NotBlank(message = "username cannot be blank")
-  private String username;
-  @NotBlank(message = "email cannot be blank")
-  @Email
-  private String email;
-  @NotBlank(message = "password cannot be blank")
-  @Size(min = 5, max = 32, message = "password must be between 5 and 32 characters")
-  // @Pattern(regexp = "^.*(?=.{5,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$") //kriterler
-  private String password;
+    @NotBlank(message = "Kullanıcı adı boş geçilemez")
+    @Size(min =2 ,max=20  ,message = "Kullanıcı adı enaz 2 karakter en fazla 20 karakter olabilir" )
+    private  String username;
+    @Email
+    private  String email;
+    @NotBlank(message = "Şifre boş geçilemez")
+    @Size(min = 5 ,max=32, message = "Sifre  enaz 5 karakter en fazla 32 karakter olabilir")
+   // @Pattern(regexp = "^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$")
+    private  String password;
+
+
 }

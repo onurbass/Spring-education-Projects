@@ -6,14 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class RegisterResponseDto {
-    private Long id; //şart değil görmek için tutuyoruz
-    private String token;
-    private String activationCode;
+    private Long id;
+    private  String activationCode;
     private String username;
-
-
 }
