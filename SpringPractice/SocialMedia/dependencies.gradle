@@ -6,6 +6,7 @@ ext {
             mapstruct : "1.5.5.Final",
             openapi   : "1.7.0",
             jwt :"4.4.0",
+            springCloud: "3.1.8",
 
     ]
 
@@ -20,6 +21,8 @@ ext {
             openapi             : "org.springdoc:springdoc-openapi-ui:$versions.openapi",
             springBootValidation: "org.springframework.boot:spring-boot-starter-validation:$versions.springBoot",
             javaJwt             : "com.auth0:java-jwt:$versions.jwt",
+            springCloudOpenFeign: "org.springframework.cloud:spring-cloud-starter-openfeign:$versions.springCloud",
+
     ]
 
 

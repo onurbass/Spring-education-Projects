@@ -6,6 +6,7 @@ import com.socialmedia.dto.request.RegisterRequestDto;
 import com.socialmedia.dto.response.RegisterResponseDto;
 import com.socialmedia.exception.AuthManagerException;
 import com.socialmedia.exception.ErrorType;
+import com.socialmedia.manager.IUserManager;
 import com.socialmedia.mapper.IAuthMapper;
 import com.socialmedia.repository.IAuthRepository;
 import com.socialmedia.repository.entity.Auth;
@@ -13,8 +14,8 @@ import com.socialmedia.repository.enums.EStatus;
 import com.socialmedia.utility.CodeGenerator;
 import com.socialmedia.utility.JWTTokenManager;
 import com.socialmedia.utility.ServiceManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -43,20 +44,25 @@ public class AuthService extends ServiceManager<Auth, Long> {
 
   private final IAuthRepository authRepository;
   private final JWTTokenManager jwtTokenManager;
+  private final IUserManager userManager;
 
-  public AuthService(IAuthRepository authRepository,JWTTokenManager jwtTokenManager) {
+  public AuthService(IAuthRepository authRepository,JWTTokenManager jwtTokenManager,IUserManager userManager) {
 	super(authRepository);
 	this.authRepository = authRepository;
 	this.jwtTokenManager = jwtTokenManager;
+	this.userManager = userManager;
   }
-
+@Transactional
   public RegisterResponseDto register(RegisterRequestDto dto) {
 
 	Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
 	auth.setActivationCode(CodeGenerator.generateCode());
 	try {
 	  save(auth);
+	userManager.save(IAuthMapper.INSTANCE.toUserSaveRequestDto(auth));
+
 	} catch (Exception e) {
+
 	  throw new RuntimeException("Kayıt başarısız!!!!");
 	}
 
@@ -81,7 +87,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
 	  throw new AuthManagerException(ErrorType.TOKEN_NOT_CREATED);
 	});
   }
-
+@Transactional
   public String activateStatus(ActivationRequestDto dto) {
 
 	Optional<Auth> optionalAuth = findById(jwtTokenManager.getIdFromToken(dto.getToken()).orElseThrow(() -> {
@@ -97,6 +103,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
 	if (dto.getActivationCode().equals(optionalAuth.get().getActivationCode())) {
 	  optionalAuth.get().setStatus(EStatus.ACTIVE);
 	  update(optionalAuth.get());
+	  userManager.activateStatus(dto.getToken());
 	  return "Hesabınız aktif edilmiştir";
 	} else {
 	  throw new AuthManagerException(ErrorType.INVALID_CODE);

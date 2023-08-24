@@ -3,8 +3,8 @@ server:
 
 spring:
   datasource:
-    username: postgres
-    password: 123456789
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
     url: jdbc:postgresql://localhost:5432/Java10SocialAuth
     driver-class-name: org.postgresql.Driver
   jpa:
