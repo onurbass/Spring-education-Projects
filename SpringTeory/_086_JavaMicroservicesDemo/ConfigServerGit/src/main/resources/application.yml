@@ -12,7 +12,7 @@ spring:
           username: ${GIT_USERNAME}
           password: ${GIT_TOKEN_KEY}
 
-#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
+
 #spring:
 #    profiles:
 #      active: native

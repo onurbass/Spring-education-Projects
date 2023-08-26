@@ -1,0 +1,17 @@
+version: '3.1'
+#docker compose yml. mongo zipkin elasticsearch
+
+services:
+
+  zipkin-server:
+    image: openzipkin/zipkin:2.23.2
+    container_name: zipkin-server
+    expose:
+      - '9411'
+    ports:
+      - '9411:9411'
+#$ docker run  -d --hostname my-rabbit --name my-rabbitmq -e RABBITMQ_DEFAULT_USER=user -e RABBITMQ_DEFAULT_PASS=password -p 15672:15672 -p5672:5672 --memory 128m rabbitmq:3-management
+  dataflow-server:
+    environment:
+      - SPRING_CLOUD_DATAFLOW_APPLICATIONPROPERTIES_STREAM_SPRING_ZIPKIN_ENABLED=true
+      - SPRING_CLOUD_DATAFLOW_APPLICATIONPROPERTIES_STREAM_SPRING_ZIPKIN_BASEURL=http://zipkin-server:9411

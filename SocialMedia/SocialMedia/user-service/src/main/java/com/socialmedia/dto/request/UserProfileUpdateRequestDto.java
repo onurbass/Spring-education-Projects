@@ -15,7 +15,6 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Builder
 public class UserProfileUpdateRequestDto {
-
     private String token;
     @NotBlank(message = "Kullanıcı adı boş geçilemez")
     @Size(min =2 ,max=20  ,message = "Kullanıcı adı enaz 2 karakter en fazla 20 karakter olabilir" )
