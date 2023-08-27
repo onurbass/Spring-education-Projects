@@ -1,6 +1,15 @@
-server.port: 9093
+server:
+  port: 9093
+  error:
+    whitelabel:
+      enabled: false
 
 spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: 123456789
   zipkin:
     enabled: true
     base-url: http://localhost:9411
@@ -14,7 +23,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-
 
 authservice:
   secrets:

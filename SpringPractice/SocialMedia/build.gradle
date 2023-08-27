@@ -17,7 +17,7 @@ allprojects {
 }
 
 subprojects {
-    group 'com.socialmedia'
+    group 'com.onurbas'
     version 'v.0.0.1'
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
@@ -38,7 +38,6 @@ allprojects {
             classpath("org.springframework.boot:spring-boot-gradle-plugin:$versions.springBoot")
         }
     }
-
     dependencies {
         implementation libs.springBootWeb
         implementation libs.lombok
@@ -53,7 +52,7 @@ allprojects {
 }
 
 configurations {
-    compileOnly {
+    compileOnly{
         extendsFrom annotationProcessor
     }
 }
