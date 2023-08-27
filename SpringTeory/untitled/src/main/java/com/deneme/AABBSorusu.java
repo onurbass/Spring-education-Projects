@@ -4,7 +4,7 @@ public class AABBSorusu {
   /*
    * Bir S string ifade verilcek ve sadece A ve B harflerinden oluşacak
    * Amaç String formatında A..AB..B elde etmek tüm a lar b den önce gelecek
-   * BBAAABBAB
+   * BBAAABBAB //AAABBB //3
    * AAABBB
    * Bunuda string ifadeden harfleri silerek sağlayacağız
    * İşlem yapılan String Sadece A veya sadece B den oluşabilir (AAA) (BBB)
@@ -13,7 +13,7 @@ public class AABBSorusu {
    *
    * */
   public static void main(String[] args) {
-	System.out.println(solution("BAAABAB"));//AAABB
+	System.out.println(solution("BABAABBA"));//AAABB
   }
 
   public static int solution(String S) {
@@ -35,7 +35,7 @@ public class AABBSorusu {
 	}
 
 	for (int i = 0; i < S.length(); i++) {
-	  for (int j = i; j < S.length(); j++) {
+	  for (int j = i + 1; j < S.length(); j++) {
 		if (S.charAt(i) == 'B' && S.charAt(j) == 'A') {
 		  if (i < j) {
 			count++;
@@ -50,7 +50,7 @@ public class AABBSorusu {
 		  }
 
 		}
-		System.out.println(i + ".index= " + S.charAt(i) + "  " + j + ".index= " + S.charAt(j));
+
 	  }
 
 	}
