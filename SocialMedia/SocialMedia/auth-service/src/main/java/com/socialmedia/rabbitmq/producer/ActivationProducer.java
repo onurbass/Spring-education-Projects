@@ -9,16 +9,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ActivationProducer {
 
-    private  final RabbitTemplate rabbitTemplate;
-    @Value("${rabbitmq.auth-exchange}")
-   private  String directExchange;
-    @Value("${rabbitmq.activation-bindingKey}")
-   private  String activationBindingKey;
+  private final RabbitTemplate rabbitTemplate;
+  @Value("${rabbitmq.auth-exchange}")
+  private String directExchange;
+  @Value("${rabbitmq.activation-bindingKey}")
+  private String activationBindingKey;
 
-    public void activation(Long authId){
+  public void activation(Long authId) {
 
-        rabbitTemplate.convertAndSend(directExchange,activationBindingKey,authId);
-    }
-
+	rabbitTemplate.convertAndSend(directExchange,activationBindingKey,authId);
+  }
 
 }

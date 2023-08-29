@@ -4,13 +4,13 @@ server:
 spring:
   security:
     user:
-      name: mustafa
-      password: 123
+      username: user
+      password: 123456789
   rabbitmq:
     host: localhost
     port: 5672
-    username: mustafa
-    password: 123
+    username: user
+    password: 123456789
   zipkin:
     enabled: true
     base-url: http://localhost:9411

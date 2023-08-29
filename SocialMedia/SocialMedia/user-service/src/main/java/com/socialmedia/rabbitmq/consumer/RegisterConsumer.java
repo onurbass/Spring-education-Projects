@@ -12,14 +12,13 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class RegisterConsumer {
 
-    private final  UserProfileService userProfileService;
+  private final UserProfileService userProfileService;
 
-    @RabbitListener(queues = ("registerQueue"))
-    public void newUserCreate(RegisterModel registerModel){
-        log.info("User {}",registerModel.toString());
+  @RabbitListener(queues = ("registerQueue"))
+  public void newUserCreate(RegisterModel registerModel) {
+	log.info("User {}",registerModel.toString());
 
-        userProfileService.createNewUserWithRabbitmq(registerModel);
-    }
-
+	userProfileService.createNewUserWithRabbitmq(registerModel);
+  }
 
 }

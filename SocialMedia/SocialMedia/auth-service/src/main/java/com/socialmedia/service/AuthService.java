@@ -81,7 +81,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
 	  throw new AuthManagerException(ErrorType.USER_NOT_CREATED);
 	}
   }
-
+@Transactional
   public RegisterResponseDto registerWithRabbitmq(RegisterRequestDto dto) {
 	dto.setPassword(passwordEncoder.encode(dto.getPassword()));
 	Auth auth = IAuthMapper.INSTANCE.toAuth(dto);

@@ -1,4 +1,5 @@
 package com.socialmedia.rabbitmq.model;
+//birebir authtaki path ile aynı olmak zorunda
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
