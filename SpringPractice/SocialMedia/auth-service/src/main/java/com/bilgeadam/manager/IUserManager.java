@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import static com.bilgeadam.constant.EndPoints.ACTIVATE_STATUS;
 import static com.bilgeadam.constant.EndPoints.SAVE;
 
-@FeignClient(url = "http://localhost:7072/api/v1/user",decode404 = true,name = "auth-userprofile")
+@FeignClient(url = "http://localhost:7072/api/v1/user", decode404 = true, name = "auth-userprofile")
 public interface IUserManager {
 
-    @PostMapping(SAVE)
-   ResponseEntity<Boolean> save(@RequestBody UserSaveRequestDto dto);
+  @PostMapping(SAVE)
+  ResponseEntity<Boolean> save(@RequestBody UserSaveRequestDto dto);
 
-    @PostMapping(ACTIVATE_STATUS)
-    ResponseEntity<String> activateStatus(@RequestParam String token);
-
+  @PostMapping(ACTIVATE_STATUS)
+  ResponseEntity<String> activateStatus(@RequestParam String token);
 
 }

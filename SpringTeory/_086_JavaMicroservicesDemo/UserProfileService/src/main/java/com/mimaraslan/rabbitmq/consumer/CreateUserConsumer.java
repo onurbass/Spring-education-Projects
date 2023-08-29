@@ -1,6 +1,5 @@
 package com.mimaraslan.rabbitmq.consumer;
 
-
 import com.mimaraslan.rabbitmq.model.SaveAuthModel;
 import com.mimaraslan.repository.entity.UserProfile;
 import com.mimaraslan.service.UserProfileService;
@@ -12,17 +11,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CreateUserConsumer {
 
-    private final UserProfileService userProfileService;
+  private final UserProfileService userProfileService;
 
-    @RabbitListener(queues = "queue-auth")
-    public void createFromQueue(SaveAuthModel model){
-        userProfileService.save(
-                UserProfile.builder()
-                        .authid(model.getAuthid())
-                        .username(model.getUsername())
-                        .email(model.getEmail())
-                        .build()
-        );
-    }
+  @RabbitListener(queues = "queue-auth")
+  public void createFromQueue(SaveAuthModel model) {
+	userProfileService.save(
+			UserProfile.builder()
+					   .authid(model.getAuthid())
+					   .username(model.getUsername())
+					   .email(model.getEmail())
+					   .build()
+						   );
+  }
 
 }

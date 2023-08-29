@@ -11,63 +11,60 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqConfig {
 
-        @Value("${rabbitmq.auth-exchange}")
-        private String exchange;
+  @Value("${rabbitmq.auth-exchange}")
+  private String exchange;
 
-        /////register
-         @Value("${rabbitmq.register-queue}")
-        private String registerQueueName;
-         @Value("${rabbitmq.register-bindingKey}")
-        private String registerBindingKey;
-         ////activation
-         @Value("${rabbitmq.activation-queue}")
-         private String activationQueueName;
-         @Value("${rabbitmq.activation-bindingKey}")
-         private String activationBindingKey;
-         // mail
-         @Value("${rabbitmq.mail-queue}")
-        private String mailQueueName;
-        @Value("${rabbitmq.mail-bindingKey}")
-        private String mailBindingKey;
+  /////register
+  @Value("${rabbitmq.register-queue}")
+  private String registerQueueName;
+  @Value("${rabbitmq.register-bindingKey}")
+  private String registerBindingKey;
+  ////activation
+  @Value("${rabbitmq.activation-queue}")
+  private String activationQueueName;
+  @Value("${rabbitmq.activation-bindingKey}")
+  private String activationBindingKey;
+  // mail
+  @Value("${rabbitmq.mail-queue}")
+  private String mailQueueName;
+  @Value("${rabbitmq.mail-bindingKey}")
+  private String mailBindingKey;
 
+  @Bean
+  DirectExchange exchangeAuth() {
+	return new DirectExchange(exchange);
+  }
 
-        @Bean
-         DirectExchange exchangeAuth(){
-             return new DirectExchange(exchange);
-         }
+  @Bean
+  Queue registerQueue() {
+	return new Queue(registerQueueName);
+  }
 
-         @Bean
-         Queue registerQueue(){
-            return  new Queue(registerQueueName);
-         }
+  @Bean
+  public Binding bindingRegister(final Queue registerQueue,final DirectExchange exchangeAuth) {
+	return BindingBuilder.bind(registerQueue).to(exchangeAuth).with(registerBindingKey);
+  }
 
-         @Bean
-       public Binding bindingRegister(final Queue  registerQueue,final DirectExchange exchangeAuth ){
-                return BindingBuilder.bind(registerQueue).to(exchangeAuth).with(registerBindingKey);
-         }
+  /// activation
+  @Bean
+  Queue activationQueue() {
+	return new Queue(activationQueueName);
+  }
 
+  @Bean
+  public Binding bindingActivation(final Queue activationQueue,final DirectExchange exchangeAuth) {
+	return BindingBuilder.bind(activationQueue).to(exchangeAuth).with(activationBindingKey);
+  }
 
-         /// activation
-    @Bean
-    Queue activationQueue(){
-        return  new Queue(activationQueueName);
-    }
+  /// mail
 
-    @Bean
-    public Binding bindingActivation(final Queue  activationQueue,final DirectExchange exchangeAuth ){
-        return BindingBuilder.bind(activationQueue).to(exchangeAuth).with(activationBindingKey);
-    }
+  @Bean
+  Queue mailQueue() {
+	return new Queue(mailQueueName);
+  }
 
-
-    /// mail
-
-    @Bean
-    Queue mailQueue(){
-        return  new Queue(mailQueueName);
-    }
-
-    @Bean
-    public Binding bindingMail(final Queue  mailQueue,final DirectExchange exchangeAuth ){
-        return BindingBuilder.bind(mailQueue).to(exchangeAuth).with(mailBindingKey);
-    }
+  @Bean
+  public Binding bindingMail(final Queue mailQueue,final DirectExchange exchangeAuth) {
+	return BindingBuilder.bind(mailQueue).to(exchangeAuth).with(mailBindingKey);
+  }
 }

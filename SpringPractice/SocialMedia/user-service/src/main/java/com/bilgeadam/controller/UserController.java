@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.List;
+
 import static com.bilgeadam.constant.EndPoints.*;
 
 @RestController
@@ -32,5 +34,10 @@ public class UserController {
     @PutMapping(UPDATE)
     public ResponseEntity<String> updateUserProfile(@Valid @RequestBody UserProfileUpdateRequestDto dto){
         return ResponseEntity.ok(userService.updateUserProfile(dto));
+    }
+
+    @GetMapping(FIND_ALL)
+    public ResponseEntity<List<UserProfile>> findAll(){
+        return ResponseEntity.ok(userService.findAll());
     }
 }

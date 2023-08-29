@@ -17,7 +17,7 @@ allprojects {
 }
 
 subprojects {
-    group 'com.onurbas'
+    group 'com.bilgeadam'
     version 'v.0.0.1'
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
@@ -48,11 +48,15 @@ allprojects {
         implementation libs.springBootValidation
         implementation libs.javaJwt
         implementation libs.springCloudOpenFeign
+        implementation libs.springCloudZipkin
+        implementation libs.springCloudSleuth
+        implementation libs.springBootRabbitMq
+
     }
 }
 
 configurations {
-    compileOnly{
+    compileOnly {
         extendsFrom annotationProcessor
     }
 }
