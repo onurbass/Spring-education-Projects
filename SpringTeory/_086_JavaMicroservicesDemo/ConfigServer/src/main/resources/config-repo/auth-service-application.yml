@@ -20,7 +20,6 @@ spring:
     username:  ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
     url: jdbc:postgresql://localhost:5432/JavaMicroAuthDB
-
   jpa:
     hibernate:
       ddl-auto: update

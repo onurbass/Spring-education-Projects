@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CreateUserProducer {
 
-  public final RabbitTemplate rabbitTemplate;
+    public final RabbitTemplate rabbitTemplate;
 
-  public void convertAndSend(SaveAuthModel model) {
-	rabbitTemplate.convertAndSend("direct-exchange-auth","save-binding-key",model);
-  }
+    public void convertAndSend(SaveAuthModel model){
+        rabbitTemplate.convertAndSend("direct-exchange-auth","save-binding-key", model);
+    }
 
 }
