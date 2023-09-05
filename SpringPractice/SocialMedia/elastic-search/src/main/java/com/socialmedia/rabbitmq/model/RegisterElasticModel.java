@@ -5,14 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class RegisterModel implements Serializable{
-    private Long authId;
-    private String username;
-    private String email;
+public class RegisterElasticModel {
+private String id;
+  private Long authId;
+  private String username;
+  private String email;
 }

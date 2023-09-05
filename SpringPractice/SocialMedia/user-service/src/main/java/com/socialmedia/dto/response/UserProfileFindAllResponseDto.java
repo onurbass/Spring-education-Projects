@@ -1,25 +1,20 @@
-package com.socialmedia.repository.entity;
+package com.socialmedia.dto.response;
 
 import com.socialmedia.repository.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+
 
 import java.time.LocalDate;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
-@Document
-public class UserProfile extends BaseEntity {
-
-  @Id
-  private String id;
+@AllArgsConstructor
+@Builder
+public class UserProfileFindAllResponseDto {
+  private Long userProfileId;
   private Long authId;
   private String username;
   private String email;
@@ -30,7 +25,5 @@ public class UserProfile extends BaseEntity {
   private String name;
   private String surName;
   private LocalDate birthDate;
-
-  @Builder.Default
-  private EStatus status = EStatus.PENDING;
+  private EStatus status;
 }

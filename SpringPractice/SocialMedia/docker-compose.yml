@@ -5,6 +5,17 @@ networks:
     driver: bridge
 
 services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27017:27017"
+    networks:
+      - java_10_network
+
   zipkin:
     image: openzipkin/zipkin:latest
     container_name: sabah_zipkin
@@ -30,6 +41,7 @@ services:
       - "6379:6379"
     networks:
       - java_10_network
+
   elasticsearch:
     image: elasticsearch:7.17.12
     container_name: sabah_es01
@@ -48,9 +60,9 @@ services:
             reservations:
               cpus: "0.25"
               memory: 256M
-
     networks:
       - java_10_network
+
   kibana:
     container_name: kibana
     image: kibana:7.17.12

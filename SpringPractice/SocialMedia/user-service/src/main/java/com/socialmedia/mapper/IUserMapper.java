@@ -3,9 +3,12 @@ package com.socialmedia.mapper;
 import com.socialmedia.dto.request.AuthUpdateRequestDto;
 import com.socialmedia.dto.request.UserProfileUpdateRequestDto;
 import com.socialmedia.dto.request.UserSaveRequestDto;
+import com.socialmedia.dto.response.UserProfileFindAllResponseDto;
+import com.socialmedia.rabbitmq.model.RegisterElasticModel;
 import com.socialmedia.rabbitmq.model.RegisterModel;
 import com.socialmedia.repository.entity.UserProfile;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -19,5 +22,10 @@ public interface IUserMapper {
 
     UserProfile toUserProfile(UserProfileUpdateRequestDto dto);
     AuthUpdateRequestDto toAuthUpdateRequestDto(UserProfile userProfile);
+    @Mapping( source = "id",target = "userProfileId")
+    UserProfileFindAllResponseDto toUserProfileFindAllResponseDto(UserProfile userProfile);
+
+    RegisterElasticModel toRegisterElasticModel(UserProfile userProfile);
+
 
 }

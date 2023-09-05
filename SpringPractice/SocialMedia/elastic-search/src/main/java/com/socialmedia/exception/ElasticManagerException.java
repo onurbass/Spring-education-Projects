@@ -12,7 +12,7 @@ public class ElasticManagerException extends RuntimeException {
         this.errorType = errorType;
     }
 
-    public ElasticManagerException(ErrorType errorType,String customMessage){
+    public ElasticManagerException(ErrorType errorType, String customMessage){
         super(customMessage);
         this.errorType=errorType;
     }

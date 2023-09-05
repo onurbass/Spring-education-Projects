@@ -19,6 +19,15 @@ public class RabbitMqConfig {
     @Value("${rabbitmq.activation-queue}")
     private String activationQueueName;
 
+    @Value("${rabbitmq.register-elastic-queue}")
+    private String elasticQueueName;
+
+    @Value("${rabbitmq.user-exchange}")
+    private String exchange;
+
+    @Value("${rabbitmq.register-elastic-binding-key}")
+    private String elasticBindingKey;
+
     @Bean
     Queue registerQueue(){
         return new Queue(registerQueueName);
@@ -28,5 +37,19 @@ public class RabbitMqConfig {
     public Queue activationQueue() {
         return new Queue(activationQueueName);
     }
+
+    @Bean
+    public Queue registerElasticQueue() {
+        return new Queue(elasticQueueName);
+    }
+    @Bean
+    DirectExchange DirectExchange(){
+        return new DirectExchange(exchange);
+    }
+    @Bean
+    public Binding binding(Queue registerElasticQueue, DirectExchange DirectExchange) {
+        return BindingBuilder.bind(registerElasticQueue).to(DirectExchange).with(elasticBindingKey);
+    }
+
 
 }

@@ -2,6 +2,7 @@ package com.socialmedia.controller;
 
 import com.socialmedia.dto.request.UserProfileUpdateRequestDto;
 import com.socialmedia.dto.request.UserSaveRequestDto;
+import com.socialmedia.dto.response.UserProfileFindAllResponseDto;
 import com.socialmedia.repository.entity.UserProfile;
 import com.socialmedia.repository.enums.EStatus;
 import com.socialmedia.service.UserService;
@@ -40,8 +41,8 @@ public class UserController {
   }
 
   @GetMapping(FIND_ALL)
-  public ResponseEntity<List<UserProfile>> findAll() {
-	return ResponseEntity.ok(userService.findAll());
+  public ResponseEntity<List<UserProfileFindAllResponseDto>> findAll() {
+	return ResponseEntity.ok(userService.findAllUserProfile());
   }
 
   @GetMapping("/find_by_username/{username}")

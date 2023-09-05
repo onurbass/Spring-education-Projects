@@ -9,14 +9,11 @@ import java.util.Optional;
 
 public interface IUserRepository extends ElasticsearchRepository<UserProfile, String> {
 
-  Boolean existsByUsername(String username);
+    Boolean existsByUsername(String username);
+    Optional<UserProfile> findByAuthId(Long authId);
 
-  Optional<UserProfile> findByAuthId(Long authId);
+    Optional<UserProfile> findByUsername(String username);
 
-  Optional<UserProfile> findByUsername(String username);
-
-  List<UserProfile> findUserProfileByStatus(EStatus eStatus);
-  List<UserProfile> findUserProfileByStatus(String string);
-
+    List<UserProfile> findByStatus(EStatus status);
 
 }

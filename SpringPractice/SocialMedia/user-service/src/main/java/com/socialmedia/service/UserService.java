@@ -2,11 +2,13 @@ package com.socialmedia.service;
 
 import com.socialmedia.dto.request.UserProfileUpdateRequestDto;
 import com.socialmedia.dto.request.UserSaveRequestDto;
+import com.socialmedia.dto.response.UserProfileFindAllResponseDto;
 import com.socialmedia.exception.ErrorType;
 import com.socialmedia.exception.UserManagerException;
 import com.socialmedia.manager.IAuthManager;
 import com.socialmedia.mapper.IUserMapper;
 import com.socialmedia.rabbitmq.model.RegisterModel;
+import com.socialmedia.rabbitmq.producer.RegisterElasticProducer;
 import com.socialmedia.repository.IUserRepository;
 import com.socialmedia.repository.entity.UserProfile;
 import com.socialmedia.repository.enums.EStatus;
@@ -16,7 +18,6 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -29,20 +30,22 @@ import java.util.Optional;
  */
 
 @Service
-public class UserService extends ServiceManager<UserProfile, Long> {
+public class UserService extends ServiceManager<UserProfile, String> {
 
   //Dependency Injec -->> constructor injection, setter injection, field injection
   private final IUserRepository userRepository;
   private final JwtTokenManager jwtTokenManager; //singleton üretilen JwtTokenManager sınıfının bu AuthService'e çağırılıp kullanıma açılması işlemidir..
   private final IAuthManager authManager;
   private final CacheManager cacheManager;
+  private final RegisterElasticProducer registerElasticProducer;
 
-  public UserService(IUserRepository userRepository,JwtTokenManager jwtTokenManager,IAuthManager authManager,CacheManager cacheManager) {
+  public UserService(IUserRepository userRepository,JwtTokenManager jwtTokenManager,IAuthManager authManager,CacheManager cacheManager,RegisterElasticProducer registerElasticProducer) {
 	super(userRepository);
 	this.userRepository = userRepository;
 	this.jwtTokenManager = jwtTokenManager;
 	this.authManager = authManager;
 	this.cacheManager = cacheManager;
+	this.registerElasticProducer = registerElasticProducer;
   }
 
   public Boolean createNewUser(UserSaveRequestDto dto) {
@@ -73,7 +76,6 @@ public class UserService extends ServiceManager<UserProfile, Long> {
 	return "Hesabınız aktive olmustur.";
   }
 
-  @Transactional
   public String updateUserProfile(UserProfileUpdateRequestDto dto) {
 	Optional<Long> authId = jwtTokenManager.getAuthIdFromToken(dto.getToken());
 	if (authId.isEmpty()) {
@@ -114,6 +116,7 @@ public class UserService extends ServiceManager<UserProfile, Long> {
 	  UserProfile userProfile = IUserMapper.INSTANCE.toUserProfile(model);
 
 	  save(userProfile);
+	  registerElasticProducer.sendNewUser(IUserMapper.INSTANCE.toRegisterElasticModel(userProfile));
 	  return true;
 	} catch (Exception e) {
 	  throw new UserManagerException(ErrorType.USER_NOT_CREATED);
@@ -163,13 +166,15 @@ public class UserService extends ServiceManager<UserProfile, Long> {
 
 	if (userProfile.isEmpty()) {
 	  throw new UserManagerException(ErrorType.USER_NOT_FOUND);
-  }
+	}
 	userProfile.get().setStatus(EStatus.DELETED);
 	update(userProfile.get());
 	cacheManager.getCache("find_by_username").evict(userProfile.get().getUsername());//cache silme
   }
 
-
-
+  public List<UserProfileFindAllResponseDto> findAllUserProfile() {
+	List<UserProfile> userProfiles = findAll();
+	return userProfiles.stream().map(x -> IUserMapper.INSTANCE.toUserProfileFindAllResponseDto(x)).toList();
   }
+}
 

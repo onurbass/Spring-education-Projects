@@ -7,9 +7,9 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @SuperBuilder
 public class BaseEntity implements Serializable {
 
