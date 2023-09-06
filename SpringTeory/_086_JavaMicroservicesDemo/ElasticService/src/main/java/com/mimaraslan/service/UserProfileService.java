@@ -10,56 +10,70 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-public class UserProfileService extends ServiceManager<UserProfile, Long> {
+public class UserProfileService extends ServiceManager <UserProfile, Long> {
 
-  private final IUserProfileRepository iUserProfileRepository;
+    private final IUserProfileRepository iUserProfileRepository;
 
-  public UserProfileService(IUserProfileRepository iUserProfileRepository) {
-	super(iUserProfileRepository);
-	this.iUserProfileRepository = iUserProfileRepository;
-  }
+    public UserProfileService(IUserProfileRepository iUserProfileRepository) {
+        super(iUserProfileRepository);
+        this.iUserProfileRepository = iUserProfileRepository;
+    }
 
-  public void saveDto(UserProfileSaveRequestDto dto) {
+    public void saveDto(UserProfileSaveRequestDto dto) {
 
-	/**
-	 * Eğer userprofileid daha önceden kayıtlıysa, kaydetmesini engelle.
-	 */
-	//  if(!iUserProfileRepository.existsUserProfileById(dto.getId()))
-	save(IUserProfileMapper.INSTANCE.toUserProfile(dto));
-  }
+        /**
+         * Eğer userprofileid daha önceden kayıtlıysa, kaydetmesini engelle.
+         */
+      //  if(!iUserProfileRepository.existsUserProfileById(dto.getId()))
+            save(IUserProfileMapper.INSTANCE.toUserProfile(dto));
+    }
 
-  public Page<UserProfile> findAll(PagingRequestDto dto) {
 
-	Pageable pageable = null;
-	Sort sort = null;
+    public Page<UserProfile> findAll(PagingRequestDto dto){
 
-	// FIXME "ASC" "DESC" if kontrolu yapılacak.
-	if (dto.getSortParameter() != null) {
-	  // Ternary //  ŞART   ? SAĞLANIRSA : SAĞLANMAZSA ;
-	  String direction = dto.getDirection() == "ASC" ? "ASC" : dto.getDirection();
-	  sort = Sort.by(Sort.Direction.fromString(direction),dto.getSortParameter());
+        Pageable pageable = null;
+        Sort sort = null;
 
-	}
+        // FIXME "ASC" "DESC" if kontrolu yapılacak.
+        if (dto.getSortParameter()!=null){
+            // Ternary //  ŞART   ? SAĞLANIRSA : SAĞLANMAZSA ;
+            String direction =  dto.getDirection()=="ASC" ? "ASC"  : dto.getDirection();
+            sort = Sort.by(Sort.Direction.fromString(direction), dto.getSortParameter());
 
-	// FIXME  if kontrolu yapılacak.
-	Integer pageSize = dto.getPageSize() == null ? 10 : dto.getPageSize() < 1 ? 10 : dto.getPageSize();
+        }
 
-	// hem sırlama hem de sayfalama seçildi.
-	if (sort != null && dto.getCurrentPage() != null) {
+        // FIXME  if kontrolu yapılacak.
+        Integer pageSize = dto.getPageSize() == null ? 10 :    dto.getPageSize() < 1  ? 10:  dto.getPageSize()     ;
 
-	  pageable = PageRequest.of(dto.getCurrentPage(),pageSize,sort);
+        // hem sırlama hem de sayfalama seçildi.
+        if(sort !=null  &&  dto.getCurrentPage()!=null){
 
-	} else if (sort == null && dto.getCurrentPage() != null) {
-	  pageable = PageRequest.of(dto.getCurrentPage(),pageSize);
+            pageable = PageRequest.of(dto.getCurrentPage(), pageSize, sort);
 
-	} else {
-	  pageable = PageRequest.of(0,pageSize);
-	}
+        } else  if(sort ==null  &&  dto.getCurrentPage() !=null){
+            pageable = PageRequest.of(dto.getCurrentPage(), pageSize);
 
-	return iUserProfileRepository.findAll(pageable);
-  }
+        } else {
+            pageable = PageRequest.of(0, pageSize);
+        }
 
+        return iUserProfileRepository.findAll(pageable);
+    }
+
+
+    public Optional<UserProfile> findUserByAuthId(Long authid){
+        return iUserProfileRepository.findOptionalByAuthid(authid);
+    }
+
+
+    public ResponseEntity<Void> deleteByAuthId(Long authid) {
+        iUserProfileRepository.deleteOptionalByAuthid(authid);
+        return null;
+    }
 }
