@@ -18,67 +18,64 @@ import java.util.Optional;
 
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-    @Autowired
-    JwtTokenManager jwtTokenManager;
+  @Autowired
+  JwtTokenManager jwtTokenManager;
 
+  @Autowired
+  JwtUserDetails jwtUserDetails;
 
-    @Autowired
-    JwtUserDetails jwtUserDetails;
+  @Override
+  protected void doFilterInternal(HttpServletRequest request,
+								  HttpServletResponse response,
+								  FilterChain filterChain) throws ServletException, IOException {
+	System.out.println("Eklediğimiz filter");
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("Eklediğimiz filter");
+	if ("/elastic/user/save".equals(request.getRequestURI())) {
+	  // arada hiçbir işleme alamadan geri dönüş yapılıyor.
+	  filterChain.doFilter(request,response);
+	  return;
+	}
 
+	String bearerToken = request.getHeader("Authorization");
+	// System.out.println("Bearer Token : "+ bearerToken);
+	// System.out.println("Bearer Token : "+ bearerToken.substring(7));
 
-        if("/elastic/user/save".equals(request.getRequestURI())){
-            // arada hiçbir işleme alamadan geri dönüş yapılıyor.
-            filterChain.doFilter(request,response);
-            return;
-        }
+	if (SecurityContextHolder.getContext().getAuthentication() == null) {
 
-        String bearerToken = request.getHeader("Authorization");
-        // System.out.println("Bearer Token : "+ bearerToken);
-        // System.out.println("Bearer Token : "+ bearerToken.substring(7));
+	  System.out.println("Authentication nesnesi boş.");
+	  System.out.println("Talep edilen url: " + request.getRequestURI());
 
+	  if (bearerToken == null || !bearerToken.startsWith("Bearer "))
+		throw new ElasticServiceException(ErrorType.INVALID_TOKEN);
 
-        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+	  System.out.println("Bearer token tipi geldi.");
 
-            System.out.println("Authentication nesnesi boş.");
-            System.out.println("Talep edilen url: " + request.getRequestURI());
+	  String token = bearerToken.substring(7);
+	  Optional<Long> authid = jwtTokenManager.getIdFromToken(token);
 
-            if (bearerToken == null || !bearerToken.startsWith("Bearer ") )
-                throw new ElasticServiceException(ErrorType.INVALID_TOKEN);
+	  if (authid.isEmpty()) {
+		System.out.println("Authid boş");
+		throw new ElasticServiceException(ErrorType.INVALID_TOKEN);
+	  }
 
-            System.out.println("Bearer token tipi geldi.");
+	  System.out.println("Gelen AuthId: " + authid.get());
 
-            String token = bearerToken.substring(7);
-            Optional<Long> authid = jwtTokenManager.getIdFromToken(token);
+	  UserDetails userDetails = jwtUserDetails.loadUserByAuthId(authid.get());
 
-            if(authid.isEmpty()) {
-                System.out.println("Authid boş");
-                throw new ElasticServiceException(ErrorType.INVALID_TOKEN);
-            }
+	  UsernamePasswordAuthenticationToken authenticationToken =
+			  new UsernamePasswordAuthenticationToken(
+					  userDetails,
+					  null,
+					  userDetails.getAuthorities());
 
-            System.out.println("Gelen AuthId: " + authid.get());
+	  SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-            UserDetails userDetails = jwtUserDetails.loadUserByAuthId(authid.get());
+	}
 
-            UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(
-                            userDetails,
-                            null,
-                            userDetails.getAuthorities());
-
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
-        }
-
-        System.out.println("Authentication nesnesi dolu token tekrar göndermedi.");
-        // arada hiçbir işleme alamadan geri dönüş yapılıyor.
-        filterChain.doFilter(request,response);
-    }
+	System.out.println("Authentication nesnesi dolu token tekrar göndermedi.");
+	// arada hiçbir işleme alamadan geri dönüş yapılıyor.
+	filterChain.doFilter(request,response);
+  }
 }
 
 

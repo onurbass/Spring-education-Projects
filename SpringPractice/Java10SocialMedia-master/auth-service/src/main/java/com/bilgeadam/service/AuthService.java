@@ -10,7 +10,9 @@ import com.bilgeadam.exception.AuthManagerException;
 import com.bilgeadam.exception.ErrorType;
 import com.bilgeadam.manager.IUserManager;
 import com.bilgeadam.mapper.IAuthMapper;
+import com.bilgeadam.rabbitmq.model.MailModel;
 import com.bilgeadam.rabbitmq.producer.ActivationProducer;
+import com.bilgeadam.rabbitmq.producer.MailProducer;
 import com.bilgeadam.rabbitmq.producer.RegisterProducer;
 import com.bilgeadam.repository.IAuthRepository;
 import com.bilgeadam.repository.entity.Auth;
@@ -52,15 +54,19 @@ public class AuthService extends ServiceManager<Auth, Long> {
     private final IUserManager userManager;
 
     private final RegisterProducer registerProducer;
+
     private final ActivationProducer activationProducer;
 
-    public AuthService(IAuthRepository authRepository,JwtTokenManager jwtTokenManager,IUserManager userManager,RegisterProducer registerProducer,ActivationProducer activationProducer) {
+    private final MailProducer mailProducer;
+
+    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager, IUserManager userManager, RegisterProducer registerProducer, ActivationProducer activationProducer, MailProducer mailProducer) {
         super(authRepository);
         this.authRepository = authRepository;
         this.jwtTokenManager = jwtTokenManager;
         this.userManager = userManager;
         this.registerProducer = registerProducer;
         this.activationProducer = activationProducer;
+        this.mailProducer = mailProducer;
     }
 
     @Transactional
@@ -72,10 +78,15 @@ public class AuthService extends ServiceManager<Auth, Long> {
         }
             save(auth);
             // bir metot yazacağiz 2 microservis arası haberleşme için
-            userManager.save(IAuthMapper.INSTANCE.toUserSaveRequestDto(auth));
-        RegisterResponseDto responseDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
-        String token=jwtTokenManager.createToken(auth.getId())
+        String token=jwtTokenManager.createToken(auth.getId(),auth.getRole())
                 .orElseThrow(()->new AuthManagerException(ErrorType.INVALID_TOKEN));
+
+
+            userManager.save(IAuthMapper.INSTANCE.toUserSaveRequestDto(auth),"Bearer "+token);
+
+
+        RegisterResponseDto responseDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+
 
         responseDto.setToken(token);
 
@@ -92,13 +103,23 @@ public class AuthService extends ServiceManager<Auth, Long> {
         save(auth);
         //rabbit mq ile haberleştireceğiz
             registerProducer.sendNewUser(IAuthMapper.INSTANCE.toRegisterModel(auth));
+
+
         //register token olusturma
         RegisterResponseDto responseDto = IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
         String token=jwtTokenManager.createToken(auth.getId())
                 .orElseThrow(()->new AuthManagerException(ErrorType.INVALID_TOKEN));
 
         responseDto.setToken(token);
-
+        // mail atma işlemi için mail servis ile haberleşilecek
+        MailModel mailModel=IAuthMapper.INSTANCE.toMailModel(auth);
+        mailModel.setToken(token);
+//        mailProducer.sendMail(MailModel
+//                .builder().username(auth.getUsername()).email(auth.getEmail())
+//                .activationCode(auth.getActivationCode())
+//                .token(token)
+//                .build());
+        mailProducer.sendMail(mailModel);
         return responseDto;
     }
 
@@ -134,9 +155,8 @@ public class AuthService extends ServiceManager<Auth, Long> {
         if(dto.getActivationCode().equals(optionalAuth.get().getActivationCode())){
             optionalAuth.get().setStatus(EStatus.ACTIVE);
             update(optionalAuth.get());
-           // userManager.activateStatus(dto.getToken());
-            activationProducer.activateStatus(dto.getToken());
-
+           // userManager.activateStatus(dto.getToken()); // open feign ile haberleşme
+            activationProducer.activateStatus(dto.getToken()); // rabbitmq ile haberleşme
             return "Hesabınız aktive edilmiştir";
         }else {
             throw new AuthManagerException(ErrorType.INVALID_CODE);
@@ -153,5 +173,23 @@ public class AuthService extends ServiceManager<Auth, Long> {
         auth.get().setUsername(dto.getUsername());
         update(auth.get());
         return "Guncelleme başarılı";
+    }
+    @Transactional
+    public String deleteAuth(String token) {
+        Optional<Long> id=jwtTokenManager.getIdFromToken(token);
+        if (id.isEmpty()){
+            throw new AuthManagerException(ErrorType.INVALID_TOKEN);
+        }
+        Optional<Auth> auth=findById(id.get());
+        if (auth.isEmpty()){
+            throw new AuthManagerException(ErrorType.USER_NOT_FOUND);
+        }
+        if (auth.get().getStatus().equals(EStatus.DELETED)){
+            throw new AuthManagerException(ErrorType.USER_NOT_FOUND,"Hesap zaten silinmiş");
+        }
+        auth.get().setStatus(EStatus.DELETED);
+        update(auth.get());
+        userManager.deleteById("Bearer "+  token);
+        return id + "id li kullanıcı başarıyla slindi";
     }
 }
