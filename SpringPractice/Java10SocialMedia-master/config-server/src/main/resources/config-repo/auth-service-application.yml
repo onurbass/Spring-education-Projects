@@ -8,8 +8,8 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: java10
-    password: 123
+    username: user
+    password: 123456789
   zipkin:
     enabled: true
     base-url: http://localhost:9411
@@ -17,7 +17,7 @@ spring:
       name: auth-service
   datasource:
     username: postgres
-    password: 123456789
+    password: root
     url: jdbc:postgresql://localhost:5432/socialAuth1
     driver-class-name: org.postgresql.Driver
   jpa:

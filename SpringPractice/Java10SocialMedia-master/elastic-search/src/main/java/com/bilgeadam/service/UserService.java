@@ -4,6 +4,7 @@ import com.bilgeadam.repository.entity.UserProfile;
 import com.bilgeadam.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 @Service
+
 public class UserService extends ServiceManager<UserProfile, String> {
     private final IUserRepository userRepository;
 
@@ -11,6 +12,4 @@ public class UserService extends ServiceManager<UserProfile, String> {
         super(userRepository);
         this.userRepository = userRepository;
     }
-
-
 }
