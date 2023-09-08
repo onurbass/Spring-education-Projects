@@ -7,7 +7,6 @@ import com.bilgeadam.repository.enums.EStatus;
 import com.bilgeadam.service.UserService;
 import com.bilgeadam.utility.JwtTokenManager;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
