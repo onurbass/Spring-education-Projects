@@ -3,7 +3,7 @@ server:
 spring:
   zipkin:
     enabled: true
-    base-url: http://10.108.5.92:9411
+    base-url: http://10.64.10.62:9411
     service:
       name: git-config-service
   application:

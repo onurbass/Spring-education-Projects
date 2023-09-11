@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMqConfig {
     @Value("${rabbitmq.mail-queue}")
     private String  mailQueueName;
+
     @Bean
     public Queue mailQueue(){
         return new Queue(mailQueueName);

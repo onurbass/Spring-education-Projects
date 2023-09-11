@@ -1,6 +1,7 @@
 package com.onurbas.dto.request;
 
 import com.onurbas.model.enums.EUserType;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ public class UserRequestDTO {
   private Long id;
   private String firstName;
   private String lastName;
+  @Email
   private String email;
   private String password;
   private EUserType userType;

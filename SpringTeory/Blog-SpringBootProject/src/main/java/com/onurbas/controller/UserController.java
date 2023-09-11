@@ -3,6 +3,7 @@ package com.onurbas.controller;
 import com.onurbas.dto.response.UserResponseDTO;
 import com.onurbas.dto.request.UserRequestDTO;
 import com.onurbas.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping(USER)
-  public ResponseEntity<UserResponseDTO> save(@RequestBody UserRequestDTO userRequestDTO) {
+  public ResponseEntity<UserResponseDTO> save(@RequestBody @Valid UserRequestDTO userRequestDTO) {
 	return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userRequestDTO));
   }
 

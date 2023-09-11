@@ -2,18 +2,18 @@ package com.bilgeadam.repository.entity;
 
 
 import com.bilgeadam.repository.enums.EStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
-
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+
 @SuperBuilder
 @Document
 public class UserProfile extends BaseEntity{

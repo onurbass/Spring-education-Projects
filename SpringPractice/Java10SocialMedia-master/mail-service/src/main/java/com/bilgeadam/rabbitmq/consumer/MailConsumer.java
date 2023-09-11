@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class MailConsumer {
 
-    private final MailService mailService;
+  private final MailService mailService;
 
-    @RabbitListener(queues = "${rabbitmq.mail-queue}")
-    public void sendEmail(MailModel model){
-        log.info("model==> {}",model);
-        mailService.sendMail(model);
-    }
+  @RabbitListener(queues = "${rabbitmq.mail-queue}")
+  public void sendEmail(MailModel model){
+	log.info("model==> {}",model);
+	mailService.sendMail(model);
+  }
 
 }

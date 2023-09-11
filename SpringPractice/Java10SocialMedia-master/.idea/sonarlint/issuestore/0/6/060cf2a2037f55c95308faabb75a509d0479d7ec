@@ -1,10 +1,8 @@
 
-E	java:S106"+Replace this use of System.out by a logger.(¶çÎüÿÿÿÿ
-@	java:S106"+Replace this use of System.out by a logger.(Ÿ âÛ
-E	java:S106"+Replace this use of System.out by a logger.(ôôÈıÿÿÿÿ
-@	java:S106%"+Replace this use of System.out by a logger.(ñšÔ
-E	java:S106,"+Replace this use of System.out by a logger.(ªÿ’úøÿÿÿÿ
-@	java:S106-"+Replace this use of System.out by a logger.(¡Õ–¦
-V	java:S1250"<This block of commented-out lines of code should be removed.(¸ñî‡ùÿÿÿÿ
-e
-java:S1128"ORemove this unused import 'org.springframework.security.core.userdetails.User'.(–Ä€
+E	java:S106"+Replace this use of System.out by a logger.(¶çÎüÿÿÿÿ
+@	java:S106"+Replace this use of System.out by a logger.(Ÿ âÛ
+E	java:S106"+Replace this use of System.out by a logger.(ôôÈıÿÿÿÿ
+@	java:S106&"+Replace this use of System.out by a logger.(ñšÔ
+E	java:S106-"+Replace this use of System.out by a logger.(ªÿ’úøÿÿÿÿ
+@	java:S106."+Replace this use of System.out by a logger.(¡Õ–¦
+V	java:S1251"<This block of commented-out lines of code should be removed.(¸ñî‡ùÿÿÿÿ

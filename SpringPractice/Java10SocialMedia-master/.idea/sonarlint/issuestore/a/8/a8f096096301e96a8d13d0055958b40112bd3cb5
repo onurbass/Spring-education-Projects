@@ -4,10 +4,10 @@ h	java:S112—"FDefine and throw a dedicated exception instead of using a gener
 h	java:S112¥"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÔòŞĞ§1
 z
 java:S1488™"\Immediately return this expression instead of assigning it to the temporary variable "list".(×˜ÄŸ8ØòŞĞ§1
-i
-java:S2259s"GA "NullPointerException" could be thrown; "getCache()" can return null.(ÊÉ·†ıÿÿÿÿ8’ôŞĞ§1
 j
 java:S2259»"GA "NullPointerException" could be thrown; "getCache()" can return null.(ıçµÑùÿÿÿÿ8ôŞĞ§1
+i
+java:S2259s"GA "NullPointerException" could be thrown; "getCache()" can return null.(ÊÉ·†ıÿÿÿÿ8’ôŞĞ§1
 o
 java:S3655µ"LCall "authId.isPresent()" or "!authId.isEmpty()" before accessing the value.(ış© ıÿÿÿÿ8”ôŞĞ§1
 €
