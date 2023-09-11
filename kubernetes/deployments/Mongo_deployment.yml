@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mongo-app
+  template:
+    metadata:
+      labels:
+        app: mongo-app
+    spec:
+      containers:
+        - name: container-mongo
+          image: mongo
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 27017
+
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: java10
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: "123"

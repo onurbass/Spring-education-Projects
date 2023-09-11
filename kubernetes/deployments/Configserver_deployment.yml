@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-deployment
+spec:
+  selector:
+    matchLabels:
+      app: config-app
+  template:
+    metadata:
+      labels:
+        app: config-app
+    spec:
+      containers:
+        - name: container-config
+          image: onurbass/java10configserver:v003
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "100m"
+          ports:
+            - containerPort: 8889
+          env:
+            - name: GIT_URI
+              value: https://github.com/onurbass/java10_config.git
+            - name: GIT_USERNAME
+              value: onurbass
+            - name: GIT_TOKEN_KEY
+              value: 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

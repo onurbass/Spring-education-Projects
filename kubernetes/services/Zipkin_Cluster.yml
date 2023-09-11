@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: zipkin-cluster
+spec:
+  selector:
+    app: zipking-app
+  type: ClusterIP
+  ports:
+    - port: 9411
+      targetPort: 9411

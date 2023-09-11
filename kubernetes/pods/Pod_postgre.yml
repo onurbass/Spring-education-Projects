@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-postgres
+  labels:
+    app: postgre-app
+spec:
+  containers:
+    - name: postgre-container
+      image: postgres
+      resources:
+        limits:
+          memory: "1024Mi"
+          cpu: "400m"
+      ports:
+        - containerPort: 5432
+      env:
+        - name: POSTGRES_PASSWORD
+          value: "root"
+        - name: POSTGRES_USER
+          value: "postgres"

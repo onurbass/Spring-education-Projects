@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mail-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mail-app
+  template:
+    metadata:
+      labels:
+        app: mail-app
+    spec:
+      containers:
+        - name: container-mail
+          image: onurbass/java10mailservice:v004
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "300m"
+          ports:
+            - containerPort: 7075
+          env:
+            - name: configserver_url
+              value: http://10.64.6.95:8889
+            - name: MAIL
+              value: onurbass.ob@gmail.com
+            - name: MAIL_PASSWORD
+              value: eyxltwwaijpnadmw

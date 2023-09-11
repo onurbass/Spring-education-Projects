@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-deployment
+spec:
+  selector:
+    matchLabels:
+      app: user-app
+  template:
+    metadata:
+      labels:
+        app: user-app
+    spec:
+      containers:
+        - name: container-auth
+          image: onurbass/java10userservice:v004
+          resources:
+            limits:
+              memory: "2048Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 7072
+          env:
+            - name: configserver_url
+              value: http://10.64.6.95:8889
+            - name: JAVA_SECRETKEY
+              value: mysecretkey
+            - name: JAVA_ISSUER
+              value: onurbas
