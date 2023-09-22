@@ -18,7 +18,7 @@ public interface IUserMapper {
 
   List<UserResponseDTO> userListToUserDTOList(List<User> userList);
 
-  User userDTOToUser(UserResponseDTO userResponseDTO);
+  User userDTO_To_User(UserResponseDTO userResponseDTO);
 
   UserRequestDTO userToUserRequestDTO(User user);
 

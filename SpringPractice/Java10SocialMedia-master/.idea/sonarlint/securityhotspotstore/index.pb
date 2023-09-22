@@ -267,3 +267,11 @@ s
 Celastic-search/src/main/java/com/bilgeadam/service/UserService.java,5\5\55a2a19922e151503f17e0c421af18b664153600
 q
 Auser-service/src/main/java/com/bilgeadam/service/UserService.java,a\8\a8f096096301e96a8d13d0055958b40112bd3cb5
+t
+Dpost-service/src/main/java/com/bilgeadam/PostServiceApplication.java,4\4\44986b56641f6b64ed6913681599ec7f7839c105
+q
+Apost-service/src/main/java/com/bilgeadam/service/PostService.java,2\c\2ca3258121aa74dbe303b71739fa58b5ef1aec53
+x
+Hpost-service/src/main/java/com/bilgeadam/repository/IPostRepository.java,5\b\5b0210e21c1ab603c5d4775bbebea1a892b87ea9
+I
+post-service/build.gradle,d\e\de2cd75a8df89200ef3d98b3e4125c7b87d5a64b

@@ -25,20 +25,22 @@ public class HomeController {
   private final UserService userService;
   private final PostService postService;
   private final CategoryService categoryService;
-  public HomeController(UserService userService, PostService postService,CategoryService categoryService) {
+
+  public HomeController(UserService userService,PostService postService,CategoryService categoryService) {
 	this.userService = userService;
 	this.postService = postService;
 	this.categoryService = categoryService;
   }
+
   @GetMapping("/api/v2")
   public String index(Model model) {
 	List<UserResponseDTO> users = userService.findAll();
 	List<PostResponseDTO> posts = postService.findAll();
 	List<CategoryDTO> categories = categoryService.findAll();
 
-	model.addAttribute("users", users);
-	model.addAttribute("posts", posts);
-	model.addAttribute("categories", categories);
+	model.addAttribute("users",users);
+	model.addAttribute("posts",posts);
+	model.addAttribute("categories",categories);
 	return "index";
   }
 
@@ -46,7 +48,7 @@ public class HomeController {
   public String newUser(Model model) {
 	User user = new User();
 
-	model.addAttribute("user", user);
+	model.addAttribute("user",user);
 
 	return "user-form";
   }
@@ -63,7 +65,7 @@ public class HomeController {
   public String newCategory(Model model) {
 	Category category = new Category();
 
-	model.addAttribute("category", category);
+	model.addAttribute("category",category);
 
 	return "category-form";
   }
@@ -79,9 +81,10 @@ public class HomeController {
   @GetMapping("/posts/new")
   public String newPost(Model model) {
 	Post post = new Post();
-	model.addAttribute("post", post);
+	model.addAttribute("post",post);
 	return "post-form";
   }
+
   @PostMapping("/posts")
   public String savePost(
 		  @ModelAttribute PostRequestDTO postRequestDTO,

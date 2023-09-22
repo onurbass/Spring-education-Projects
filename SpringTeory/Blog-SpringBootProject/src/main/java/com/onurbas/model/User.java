@@ -1,6 +1,5 @@
 package com.onurbas.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.onurbas.model.enums.EUserType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,7 +14,6 @@ import java.util.List;
 @Entity
 @Table(name = "tbl_user")
 public class User {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -28,9 +26,5 @@ public class User {
   @Builder.Default
   @Enumerated(EnumType.STRING)
   private EUserType userType = EUserType.USER;
-
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @ToString.Exclude
-  List<Post> userPosts;
 
 }

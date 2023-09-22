@@ -13,23 +13,16 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Post {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String title;
-
   private String content;
   @Column(name = "published_at")
   @Builder.Default
   private LocalDateTime date = LocalDateTime.now();
-
-  @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.LAZY)
-  private User user;
-
-  @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.LAZY)
-  @ToString.Exclude
-  private Category category;
+  private Long userId;
+  private Long categoryId;
 
 
 }

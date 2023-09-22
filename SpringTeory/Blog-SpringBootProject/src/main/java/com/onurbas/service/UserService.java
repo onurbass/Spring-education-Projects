@@ -36,6 +36,7 @@ public class UserService {
 	if (userOptional.isEmpty()) {
 	  throw new ResourceNotFoundException("User not found with ID: " + id);
 	}
+
 	UserResponseDTO userResponseDTO = IUserMapper.INSTANCE.userToUserDto(userOptional.get());
 	return userResponseDTO;
   }

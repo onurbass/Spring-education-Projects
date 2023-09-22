@@ -19,7 +19,5 @@ public class Category {
   @Column(unique = true)
   private String categoryName;
   private String description;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "category", fetch = FetchType.LAZY)
-  @ToString.Exclude
-  private List<Post> posts;
+
 }

@@ -21,7 +21,7 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping(USER)
-  public ResponseEntity<UserResponseDTO> save(@RequestBody @Valid UserRequestDTO userRequestDTO) {
+  public ResponseEntity<UserResponseDTO> save(@RequestBody UserRequestDTO userRequestDTO) {
 	return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userRequestDTO));
   }
 
@@ -34,6 +34,14 @@ public class UserController {
   public ResponseEntity<UserResponseDTO> findById(@PathVariable(name = "userId") Long id) {
 	return ResponseEntity.ok(userService.findById(id));
   }
+
+  @GetMapping(USER) //localhost:8080/users/
+  public ResponseEntity<UserResponseDTO> findById2(@RequestParam Long id) {
+	return ResponseEntity.ok(userService.findById(id));
+  }
+// GET->Getirme işlemleri findbyid find all gibi
+// POST herzaman request body gerektirir. save metodunda kullanırız
+// PUT update DELETE  - delete
 
   @PutMapping(USER + "/{userId}")
   public ResponseEntity<UserResponseDTO> update(@RequestBody UserRequestDTO userRequestDTO,@PathVariable(name = "userId") Long id) {

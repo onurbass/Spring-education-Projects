@@ -13,17 +13,17 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class UserProfileFindAllResponseDto {
-    private String id;
-   // private Long userProfileId;
-    private Long authId;
-    private String username;
-    private String email;
-    private String phone;
-    private String address;
-    private String avatar;
-    private String about;
-    private String name;
-    private String surName;
-    private LocalDate birthDate;
-    private EStatus status;
+  private String id;
+  // private Long userProfileId;
+  private Long authId;
+  private String username;
+  private String email;
+  private String phone;
+  private String address;
+  private String avatar;
+  private String about;
+  private String name;
+  private String surName;
+  private LocalDate birthDate;
+  private EStatus status;
 }

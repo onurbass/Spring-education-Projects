@@ -15,9 +15,9 @@ public class UserRequestDTO {
   private Long id;
   private String firstName;
   private String lastName;
-  @Email
+  @Email(message = "@ siz email olmaz")
   private String email;
   private String password;
-  private EUserType userType;
+
 
 }
