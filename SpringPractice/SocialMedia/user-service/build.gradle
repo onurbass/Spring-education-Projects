@@ -1,6 +1,0 @@
-
-dependencies {
-
-    implementation libs.springCloudConfigClient
-    implementation libs.springBootDataMongo
-}

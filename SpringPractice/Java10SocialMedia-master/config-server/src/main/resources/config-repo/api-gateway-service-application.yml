@@ -11,18 +11,17 @@ spring:
   application:
     name: api-gateway-service
   cloud:
-    globalcors:
-      cors-configurations:
-        '[/**]':
-          allowed-origins: "*"
-          allowed-headers: "*"
-          allowed-methods:
-            - GET
-            - POST
-            - PUT
-            - DELETE
     gateway:
-
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: "*"
+            allowed-headers: "*"
+            allowed-methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
       routes:
         - id: auth-service
           predicates:
@@ -46,4 +45,3 @@ spring:
                 fallbackUri: forward:/fallback/user_service
       default-filters:
         - RewritePath= /(?<segment>.*),/api/v1/$\{segment}   #regex yazımı
-

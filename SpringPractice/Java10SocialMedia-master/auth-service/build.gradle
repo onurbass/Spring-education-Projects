@@ -4,5 +4,4 @@ dependencies{
     implementation libs.springBootJpa
     implementation libs.springCloudConfigClient
     implementation libs.springBootSecurity
-    testImplementation 'junit:junit:4.13.1'
 }

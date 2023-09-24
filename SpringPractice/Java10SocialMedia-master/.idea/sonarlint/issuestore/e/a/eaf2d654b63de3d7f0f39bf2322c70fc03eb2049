@@ -1,0 +1,31 @@
+
+h	java:S112‘"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8„áŸ¬1
+h	java:S112Ÿ"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8„áŸ¬1
+h	java:S112­"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8„áŸ¬1
+z
+java:S1488¡"\Immediately return this expression instead of assigning it to the temporary variable "list".(×˜ÄŸ8”„áŸ¬1
+j
+java:S2259Ã"GA "NullPointerException" could be thrown; "getCache()" can return null.(ıçµÑùÿÿÿÿ8ÿ„áŸ¬1
+i
+java:S2259w"GA "NullPointerException" could be thrown; "getCache()" can return null.(ÊÉ·†ıÿÿÿÿ8ÿ„áŸ¬1
+o
+java:S3655½"LCall "authId.isPresent()" or "!authId.isEmpty()" before accessing the value.(ış© ıÿÿÿÿ8€…áŸ¬1
+€
+java:S4144Ô"bUpdate this method so that its implementation is not identical to "findAllByPageable" on line 206.(÷¹ £8ƒ…áŸ¬1
+L	java:S106V"+Replace this use of System.out by a logger.(Û”Ÿ†ÿÿÿÿÿ8“…áŸ¬1
+]	java:S125m"<This block of commented-out lines of code should be removed.(©ôä’şÿÿÿÿ8£…áŸ¬1
+L	java:S106"+Replace this use of System.out by a logger.(ø˜Ù˜úÿÿÿÿ8ÀÇãŸ¬1
+M	java:S106"+Replace this use of System.out by a logger.(öÉ›ùüÿÿÿÿ8¥’äŸ¬1
+H	java:S106ƒ"+Replace this use of System.out by a logger.(‡¡Âú8êİäŸ¬1
+M	java:S106‡"+Replace this use of System.out by a logger.(„†Àãúÿÿÿÿ8§•êŸ¬1
+|
+java:S2142"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€8º…áŸ¬1
+|
+java:S2142"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€8Á…áŸ¬1
+^	java:S125¢"<This block of commented-out lines of code should be removed.(ØÛ­àşÿÿÿÿ8Ã…áŸ¬1
+|
+java:S2142¬"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€8Å…áŸ¬1
+p
+java:S6204Ê"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(Ø¶Ëó8Õ…áŸ¬1
+€
+java:S1612Ê"bReplace this lambda with method reference 'IUserMapper.INSTANCE::toUserProfileFindAllResponseDto'.(Ø¶Ëó8×…áŸ¬1

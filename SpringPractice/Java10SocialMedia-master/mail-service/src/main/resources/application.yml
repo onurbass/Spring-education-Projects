@@ -6,4 +6,3 @@ spring:
     import: "configserver:"
   application:
     name: mail-service-application
-

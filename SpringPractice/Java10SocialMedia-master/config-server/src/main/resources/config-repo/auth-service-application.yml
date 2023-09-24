@@ -17,16 +17,14 @@ spring:
       name: auth-service
   datasource:
     username: postgres
-    password: root
-    url: jdbc:postgresql://localhost:5432/socialAuth1
+    password: 123456789
+    url: jdbc:postgresql://localhost:5432/ECommerceAuth
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
-jwt:
-  secretKey: ${JAVA_SECRETKEY}
-  issuer: ${JAVA_ISSUER}
+
 rabbitmq:
   auth-exchange: auth-exchange
   register-binding-key: register-key
@@ -35,6 +33,11 @@ rabbitmq:
   activation-queue: queue-activation
   mail-queue: queue-mail
   mail-binding-key: mail-key
+
 redis:
   host: localhost
   port: 6379
+feign:
+  user: http://localhost:7072/api/v1/user
+
+

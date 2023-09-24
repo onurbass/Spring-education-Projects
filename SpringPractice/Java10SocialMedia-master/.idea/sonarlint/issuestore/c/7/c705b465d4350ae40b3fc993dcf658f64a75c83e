@@ -1,7 +1,0 @@
-
-@	java:S106f"+Replace this use of System.out by a logger.(ÂÄ≤∑
-G	java:S106m"+Replace this use of System.out by a logger.(ÂÄ≤∑8µ‰µô®1
-n
-java:S1128"QRemove this unused import 'org.hibernate.exception.ConstraintViolationException'.(∞Œ•Õ8ëô∂ô®1
-v
-java:S1128"YRemove this unused import 'org.springframework.web.bind.annotation.RestControllerAdvice'.(…èïÑ8íô∂ô®1

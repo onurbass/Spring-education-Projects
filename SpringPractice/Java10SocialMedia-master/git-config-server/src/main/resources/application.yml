@@ -1,11 +1,11 @@
 server:
-  port: 8889
+  port: 8888
 spring:
   zipkin:
     enabled: true
-    base-url: http://10.64.10.62:9411
+    base-url: http://10.108.2.93:9411
     service:
-      name: git-config-service
+      name: git-config-server
   application:
     name: config-server-git
   cloud:
@@ -13,7 +13,7 @@ spring:
       server:
         git:
           uri: ${GIT_URI}
-          default-label: main
+          default-label: master
           skip-ssl-validation: true
           username: ${GIT_USERNAME}
           password: ${GIT_TOKEN_KEY}
