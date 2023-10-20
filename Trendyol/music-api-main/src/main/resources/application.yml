@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: music-api-local
+
+server:
+  port: 4567
+  tomcat:
+    max-threads: 5
+
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      base-path: /management
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: false
+  security:
+    enabled: false
+
+info:
+  status: OK
+  version: ${VERSION:1}
+  env: local
